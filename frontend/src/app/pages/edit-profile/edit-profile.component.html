@@ -1,0 +1,190 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Card wrapper -->
+      <div class="col-md-12">
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header card-header-rose card-header-text">
+            <div class="card-text">
+              <h4 class="card-title">Edit Profile</h4>
+            </div>
+          </div>
+
+          <!-- Card body with your libUserForm -->
+          <div class="card-body">
+            <form
+              [formGroup]="form"
+              (ngSubmit)="onSubmit()"
+              class="form-horizontal"
+            >
+              <!-- Full Name -->
+              <div class="row">
+                <label class="col-sm-2 col-form-label" for="full_name"
+                  >Foydalanuvchi ism‑familiyasi</label
+                >
+                <div class="col-sm-10">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      type="text"
+                      id="full_name"
+                      formControlName="full_name"
+                      placeholder="Ism‑Familiyasi"
+                    />
+                  </mat-form-field>
+                  <div
+                    class="error-msg"
+                    *ngIf="
+                      form.get('full_name')?.touched &&
+                      form.get('full_name')?.invalid
+                    "
+                  >
+                    <small
+                      *ngIf="
+                        form.get('full_name')?.errors?.['required']
+                      "
+                    >
+                      Ism Familiya bo'sh bo'lmasligi kerak.
+                    </small>
+                    <small
+                      *ngIf="
+                        libUserForm.get('full_name')?.errors?.['minlength']
+                      "
+                    >
+                      Kamida 4 harfdan iborat bo'lishi kerak.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Address -->
+              <div class="row">
+                <label class="col-sm-2 col-form-label" for="address"
+                  >Manzil</label
+                >
+                <div class="col-sm-10">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      type="text"
+                      id="address"
+                      formControlName="address"
+                      placeholder="Manzil"
+                    />
+                  </mat-form-field>
+                  <div
+                    class="error-msg"
+                    *ngIf="
+                      form.get('address')?.touched &&
+                      form.get('address')?.invalid
+                    "
+                  >
+                    <small *ngIf="form.get('address')?.errors?.['required']">
+                      Manzil talab qilinadi.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Phone Number -->
+              <div class="row">
+                <label class="col-sm-2 col-form-label" for="phonenumber"
+                  >Tel Raqam</label
+                >
+                <div class="col-sm-10">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      type="tel"
+                      id="phonenumber"
+                      formControlName="phonenumber"
+                      placeholder="+998955555555"
+                    />
+                  </mat-form-field>
+                  <div
+                    class="error-msg"
+                    *ngIf="
+                      form.get('phonenumber')?.touched &&
+                      form.get('phonenumber')?.invalid
+                    "
+                  >
+                    <small
+                      *ngIf="
+                        form.get('phonenumber')?.errors?.['required']
+                      "
+                    >
+                      Telefon raqam talab qilinadi.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- avatar preview -->
+              <div class="avatar-wrapper">
+                <img
+                  *ngIf="avatarPreview; else placeholder"
+                  [src]="avatarPreview"
+                  class="avatar-img"
+                />
+                <ng-template #placeholder>
+                  <mat-icon class="avatar-placeholder">person</mat-icon>
+                </ng-template>
+              </div>
+              <label
+                class="custom-file-upload"
+                for="avatar"
+                [attr.data-file]="
+                  selectedFile?.name || 'Hech qanday fayl tanlanmagan'
+                "
+                >Avatar</label
+              >
+              <input
+                matInput
+                id="avatar"
+                type="file"
+                formControlName="avatar"
+                (change)="onFileChange($event)"
+                accept="image/*"
+                class="file-input"
+              />
+              <div class="error-msg" *ngIf="form.get('avatar')?.touched">
+                <small *ngIf="form.get('avatar')?.hasError('required')">
+                  Avatar talab qilinadi
+                </small>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                  <button
+                    mat-raised-button
+                    color="rose"
+                    type="submit"
+                    [disabled]="form.invalid"
+                  >
+                    Tahrirlash
+                  </button>
+                </div>
+                <!-- Cancel Button -->
+              </div>
+              <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                  <button routerLink="/dashboard" color="rose">
+                    Bekor Qilish
+                  </button>
+                </div>
+              </div>
+              <!-- Global error -->
+              <p class="backend-error" *ngIf="errorMessage">
+                {{ errorMessage }}
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

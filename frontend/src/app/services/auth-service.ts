@@ -128,6 +128,7 @@ export class AuthService {
     localStorage.removeItem("role");
     localStorage.removeItem("user_email");
     localStorage.removeItem("userId");
+    localStorage.removeItem("avatar");
     this.loggedIn.next(false);
   }
 
@@ -158,5 +159,29 @@ export class AuthService {
     localStorage.setItem("role", role);
     localStorage.setItem("userId", userId);
     localStorage.setItem("user_email", user_email);
+  }
+
+  // getting user details of all types of users
+  getUserDetails(): Observable<any> {
+    const token = localStorage.getItem("token");
+    // Create HttpHeaders and attach the token
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // adjust if your API expects a different format
+    });
+    return this.http.get<any>(`${this.baseUrl}/auth/me`, {
+      headers,
+    });
+  }
+  //update some of user details and add avatar
+  updateUser(userData: any): Observable<any> {
+    const token = localStorage.getItem("token");
+
+    // Create HttpHeaders and attach the token
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // adjust if your API expects a different format
+    });
+    return this.http.put<any>(`${this.baseUrl}/auth/update`, userData, {
+      headers,
+    });
   }
 }

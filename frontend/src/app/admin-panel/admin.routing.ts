@@ -3,6 +3,7 @@ import { AuthGuardService } from "../services/auth.guard.service";
 import { RoleGuardService } from "../services/role.guard.service";
 import { UserRegistrationComponent } from "./user-registration/user-registration.component";
 import { LibraryOwnerComponent } from "./library-register/library-owner.component";
+import { EditProfileComponent } from "../pages/edit-profile/edit-profile.component";
 
 export const adminRoutes: Routes = [
   {

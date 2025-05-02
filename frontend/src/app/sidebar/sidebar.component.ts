@@ -239,6 +239,7 @@ export class SidebarComponent implements OnInit {
   userRole = localStorage.getItem("role");
   fullName: string = "";
   ps: any;
+  userAvatar: string = "";
   isMobileMenu() {
     if ($(window).width() > 991) {
       return false;
@@ -247,6 +248,7 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userAvatar = localStorage.getItem("avatar");
     if (this.userRole === "admin") {
       this.menuItems = adminROUTES.filter((menuItem) => menuItem);
     } else if (this.userRole === "owner") {
