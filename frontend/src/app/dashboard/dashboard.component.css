@@ -1,0 +1,115 @@
+/* ─────────── LIBRARIES PANEL ─────────── */
+.library-card {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+.library-card-header {
+  background: linear-gradient(95deg, #536dfe, #8e24aa);
+  color: #fff;
+  padding: 16px 24px;
+}
+.library-card-body {
+  background: #f5f5fa;
+  padding: 20px 24px;
+}
+.library-list {
+  padding: 0;
+}
+.library-item {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.library-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+.library-index {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #8e24aa;
+  width: 32px;
+  text-align: center;
+  margin-right: 16px;
+}
+.library-details {
+  flex: 1;
+}
+.library-name {
+  margin: 0 0 6px;
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+.library-owner,
+.library-address,
+.library-email {
+  margin: 2px 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+.library-icon {
+  font-size: 32px;
+  color: #536dfe;
+  margin-left: 16px;
+}
+
+/* ─────────── NOTIFICATIONS PANEL ─────────── */
+.notifications-card {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+.notifications-card .card-header {
+  background: linear-gradient(95deg, #ffb74d, #ff8a65);
+  color: #fff;
+  padding: 16px 24px;
+}
+.notifications-card .card-body {
+  background: #fdfdfd;
+  padding: 20px 24px;
+}
+.notifications-card .alert {
+  display: flex;
+  align-items: center;
+  background: #fff3e0;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.notifications-card .alert-secondary {
+  background: #eceff1 !important;
+}
+.notifications-card .alert:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+.notifications-card .close {
+  margin-left: auto;
+  color: #777;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+.notifications-card .close:hover {
+  color: #333;
+}
+.notifications-card span {
+  font-size: 0.95rem;
+  color: #333;
+}
+.notifications-card span b {
+  margin-right: 4px;
+}
+.notifications-card .text-center {
+  padding: 24px 0;
+}

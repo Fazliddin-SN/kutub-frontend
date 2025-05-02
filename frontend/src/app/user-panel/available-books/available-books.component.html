@@ -1,0 +1,115 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Borrowed Books Table -->
+      <div class="col-md-12 mb-4">
+        <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">library_books</i>
+            </div>
+            <h4 class="card-title">Siz ijaraga olgan kitoblar ro'yxati</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">{{ tableData2.headerRow[0] }}</th>
+                    <th>{{ tableData2.headerRow[1] }}</th>
+                    <th>{{ tableData2.headerRow[2] }}</th>
+                    <th>{{ tableData2.headerRow[3] }}</th>
+                    <th>{{ tableData2.headerRow[4] }}</th>
+                    <th>{{ tableData2.headerRow[5] }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of borrowedBooks; let i = index">
+                    <td class="text-center">{{ i + 1 }}</td>
+                    <td>{{ row.title }}</td>
+                    <td>{{ row.author }}</td>
+                    <td>{{ row.library_name }}</td>
+                    <td>
+                      {{ row.rental_date | date }}
+                    </td>
+                    <td style="background-color: rgb(235, 138, 138)">
+                      {{ row.return_date | date }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p *ngIf="borrowedBooksError" class="text-danger">
+                {{ borrowedBooksError }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Available Books Table -->
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">shopping_cart</i>
+            </div>
+            <h4 class="card-title">
+              Azo bo'lgan kutubxonalaringizdagi mavjud kitoblar ro'yxati.
+              Ijaraga olish uchun <strong>Ijara So'rovi</strong> tugmasini
+              bosing.
+            </h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">{{ tableData1.headerRow[0] }}</th>
+                    <th>{{ tableData1.headerRow[1] }}</th>
+                    <th>{{ tableData1.headerRow[2] }}</th>
+                    <th>{{ tableData1.headerRow[3] }}</th>
+                    <th>{{ tableData1.headerRow[4] }}</th>
+                    <th>{{ tableData1.headerRow[5] }}</th>
+                    <th>{{ tableData1.headerRow[6] }}</th>
+                    <th>{{ tableData1.headerRow[7] }}</th>
+                    <th>{{ tableData1.headerRow[8] }}</th>
+                    <th>{{ tableData1.headerRow[9] }}</th>
+                    <th>{{ tableData1.headerRow[10] }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of availableBooks; let i = index">
+                    <td class="text-center">{{ i + 1 }}</td>
+                    <td>{{ row.title }}</td>
+                    <td>{{ row.author }}</td>
+                    <td>{{ row.publication_date | date }}</td>
+                    <td>{{ row.category_name }}</td>
+                    <td>{{ row.status }}</td>
+                    <td>{{ row.library_name }}</td>
+                    <td>{{ row.owner_name }}</td>
+                    <td>{{ row.owner_address }}</td>
+                    <td>{{ row.read_count }}</td>
+                    <td class="td-actions text-right">
+                      <button
+                        mat-raised-button
+                        type="button"
+                        class="btn btn-success rental-btn"
+                        (click)="createRequest(row)"
+                      >
+                        Ijara So'rovi
+                        <i class="material-icons ml-1">shopping_cart</i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p *ngIf="availableBooksError" class="backend-error">
+                {{ availableBooksError }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

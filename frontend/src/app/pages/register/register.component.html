@@ -1,0 +1,288 @@
+<div class="wrapper wrapper-full-page">
+  <div
+    class="page-header register-page header-filter"
+    filter-color="black"
+    style="
+      background-image: url('./assets/img/register.jpg');
+      background-size: cover;
+      background-position: center center;
+      min-height: 100vh;
+    "
+  >
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-10 ml-auto mr-auto">
+          <div class="card card-signup">
+            <h2 class="card-title text-center">Ro'yxatdan O'tish</h2>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-5 mr-auto">
+                  <div class="social text-center"></div>
+                  <form class="form" [formGroup]="registerForm">
+                    <!-- full name -->
+                    <div class="form-group has-default">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">face</i>
+                          </span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Ism-Familiya"
+                          formControlName="fullname"
+                        />
+                      </div>
+                      <p
+                        *ngIf="
+                          registerForm.get('fullname')?.touched &&
+                          registerForm.get('fullname')?.invalid
+                        "
+                      >
+                        <small
+                          *ngIf="
+                            registerForm.get('fullname')?.hasError('required')
+                          "
+                        >
+                          Ism Familiya bo'sh bo'lmasligi kerak.
+                        </small>
+                        <small
+                          *ngIf="
+                            registerForm.get('fullname')?.hasError('minlength')
+                          "
+                        >
+                          Ism‑Familiya kamida 4 harfdan iborat bo'lishi kerak.
+                        </small>
+                      </p>
+                    </div>
+                    <!-- username -->
+                    <div class="form-group has-default">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">person</i>
+                          </span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Foydalanuvchi nomi"
+                          formControlName="username"
+                        />
+                      </div>
+                      <p
+                        *ngIf="
+                          registerForm.get('username')?.touched &&
+                          registerForm.get('username')?.invalid
+                        "
+                      >
+                        <small
+                          *ngIf="
+                            registerForm.get('username')?.hasError('required')
+                          "
+                        >
+                          Foydalanuvchi nomi talab qilinadi.
+                        </small>
+                        <small
+                          *ngIf="
+                            registerForm.get('username')?.hasError('minlength')
+                          "
+                        >
+                          Kamida 3 harfdan iborat bo'lishi kerak.
+                        </small>
+                      </p>
+                    </div>
+                    <!-- Email -->
+                    <div class="form-group has-default">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">mail</i>
+                          </span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Email..."
+                          formControlName="email"
+                        />
+                      </div>
+                      <p
+                        *ngIf="
+                          registerForm.get('email')?.touched &&
+                          registerForm.get('email')?.invalid
+                        "
+                      >
+                        <small
+                          *ngIf="
+                            registerForm.get('email')?.hasError('required')
+                          "
+                        >
+                          Email talab qilinadi.
+                        </small>
+                        <small
+                          *ngIf="registerForm.get('email')?.hasError('email')"
+                        >
+                          Iltimos yaroqli email kiriting.
+                        </small>
+                      </p>
+                    </div>
+                    <!-- Password -->
+                    <div class="form-group has-default">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">lock_outline</i>
+                          </span>
+                        </div>
+                        <input
+                          type="password"
+                          placeholder="Password..."
+                          class="form-control"
+                          formControlName="password"
+                        />
+                      </div>
+                      <p
+                        *ngIf="
+                          registerForm.get('password')?.touched &&
+                          registerForm.get('password')?.invalid
+                        "
+                      >
+                        <small
+                          *ngIf="
+                            registerForm.get('password')?.hasError('required')
+                          "
+                        >
+                          Parol talab qilinadi.
+                        </small>
+                        <small
+                          *ngIf="
+                            registerForm.get('password')?.hasError('minlength')
+                          "
+                        >
+                          Kamida 6 belgidan, bitta katta harf va raqam bo'lishi
+                          kerak.
+                        </small>
+                      </p>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="form-group has-default">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">location_on</i>
+                          </span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Manzil"
+                          formControlName="address"
+                        />
+                      </div>
+                      <p
+                        *ngIf="
+                          registerForm.get('address')?.touched &&
+                          registerForm.get('address')?.invalid
+                        "
+                      >
+                        <small
+                          *ngIf="
+                            registerForm.get('address')?.hasError('required')
+                          "
+                        >
+                          Manzil talab qilinadi.
+                        </small>
+                      </p>
+                    </div>
+
+                    <!-- Phone number -->
+
+                    <div class="form-group has-default">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">phone</i>
+                          </span>
+                        </div>
+                        <input
+                          type="tel"
+                          class="form-control"
+                          placeholder="+998955555555"
+                          formControlName="phone_number"
+                        />
+                      </div>
+                      <p
+                        *ngIf="
+                          registerForm.get('phone_number')?.touched &&
+                          registerForm.get('phone_number')?.invalid
+                        "
+                      >
+                        <small
+                          *ngIf="
+                            registerForm
+                              .get('phone_number')
+                              ?.hasError('required')
+                          "
+                        >
+                          Telefon raqam talab qilinadi.
+                        </small>
+                      </p>
+                    </div>
+                    <mat-checkbox class="form-check">
+                      I agree to the
+                      <a href="#something">terms and conditions</a>.
+                    </mat-checkbox>
+                    <div class="text-center">
+                      <a
+                        href="#pablo"
+                        class="btn btn-primary btn-round mt-4"
+                        (click)="onSubmit()"
+                        >Ro'yxatdan O'tish</a
+                      >
+                    </div>
+                    <!-- Error message -->
+                    <p *ngIf="errorMessage" class="text-center text-danger">
+                      {{ errorMessage }}
+                    </p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <nav class="pull-left">
+          <ul>
+            <li>
+              <a href="https://www.creative-tim.com"> Creative Tim </a>
+            </li>
+            <li>
+              <a href="https://creative-tim.com/about-us"> About Us </a>
+            </li>
+            <li>
+              <a href="http://blog.creative-tim.com"> Blog </a>
+            </li>
+            <li>
+              <a href="https://www.creative-tim.com/license"> Licenses </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="copyright pull-right">
+          &copy;
+          {{ test | date : "yyyy" }}, made with
+          <i class="material-icons">favorite</i> by
+          <a href="https://www.creative-tim.com" target="_blank"
+            >Creative Tim</a
+          >
+          for a better web.
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>

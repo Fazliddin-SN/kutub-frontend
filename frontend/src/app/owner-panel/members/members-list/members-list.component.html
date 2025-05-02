@@ -1,0 +1,62 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Foydalanuvchilar Ro'yxati</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">{{ tableData1.headerRow[0] }}</th>
+                    <th>{{ tableData1.headerRow[1] }}</th>
+                    <th>{{ tableData1.headerRow[2] }}</th>
+                    <th>{{ tableData1.headerRow[3] }}</th>
+                    <th>{{ tableData1.headerRow[4] }}</th>
+                    <th>{{ tableData1.headerRow[5] }}</th>
+                    <th>{{ tableData1.headerRow[6] }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of members">
+                    <td class="text-center">{{ row.user_id }}</td>
+                    <td>{{ row.full_name }}</td>
+                    <td>{{ row.username }}</td>
+                    <td>{{ row.email }}</td>
+                    <td>{{ row.address }}</td>
+                    <td>{{ row.phonenumber }}</td>
+                    <td class="td-actions text-right">
+                      <button
+                        mat-raised-button
+                        type="button"
+                        class="btn btn-success"
+                        (click)="edit(row.user_id)"
+                      >
+                        <i class="material-icons">edit</i>
+                      </button>
+                      <button
+                        mat-raised-button
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="delete(row.user_id)"
+                      >
+                        <i class="material-icons">delete</i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p *ngIf="errorMessage" class="backend-error">{{ errorMessage }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

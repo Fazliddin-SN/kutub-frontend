@@ -1,0 +1,246 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Card wrapper -->
+      <div class="col-md-12">
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header card-header-rose card-header-text">
+            <div class="card-text">
+              <h4 class="card-title">Kitobni Tahrirlash</h4>
+            </div>
+          </div>
+
+          <!-- Card body with your reactive form -->
+          <div class="card-body">
+            <form
+              [formGroup]="form"
+              (ngSubmit)="onSubmit()"
+              class="form-horizontal"
+            >
+              <!-- Title -->
+              <div class="row">
+                <label class="col-sm-2 col-form-label" for="title"
+                  >Kitob Nomi</label
+                >
+                <div class="col-sm-10">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      id="title"
+                      formControlName="title"
+                      placeholder="Kitob nomi"
+                    />
+                  </mat-form-field>
+                  <div
+                    class="error-msg"
+                    *ngIf="
+                      form.get('title')?.touched && form.get('title')?.invalid
+                    "
+                  >
+                    <small *ngIf="form.get('title')?.hasError('required')">
+                      Kitob nomi kiritilishi shart.
+                    </small>
+                    <small *ngIf="form.get('title')?.hasError('minlength')">
+                      Kamida 3 ta harf bo'lishi kerak.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Author -->
+              <div class="row">
+                <label class="col-sm-2 col-form-label" for="author"
+                  >Kitob Muallifi</label
+                >
+                <div class="col-sm-10">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      id="author"
+                      formControlName="author"
+                      placeholder="Muallif ismi"
+                    />
+                  </mat-form-field>
+                  <div
+                    class="error-msg"
+                    *ngIf="
+                      form.get('author')?.touched && form.get('author')?.invalid
+                    "
+                  >
+                    <small *ngIf="form.get('author')?.hasError('required')">
+                      Muallif nomi talab qilinadi.
+                    </small>
+                    <small *ngIf="form.get('author')?.hasError('minlength')">
+                      Kamida 2 ta harf bo'lishi kerak.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ISBN -->
+              <div class="row">
+                <label class="col-sm-2 col-form-label" for="isbn">ISBN</label>
+                <div class="col-sm-10">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      id="isbn"
+                      formControlName="isbn"
+                      placeholder="ISBN raqami"
+                    />
+                  </mat-form-field>
+                  <div
+                    class="error-msg"
+                    *ngIf="
+                      form.get('isbn')?.touched && form.get('isbn')?.invalid
+                    "
+                  >
+                    <small *ngIf="form.get('isbn')?.hasError('required')">
+                      ISBN kiritilishi shart.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Publication Date -->
+              <div class="row">
+                <label class="col-sm-2 col-form-label" for="publication_date"
+                  >Nashr Sanasi</label
+                >
+                <div class="col-sm-10">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      id="publication_date"
+                      type="date"
+                      formControlName="publication_date"
+                    />
+                  </mat-form-field>
+                  <div
+                    class="error-msg"
+                    *ngIf="
+                      form.get('publication_date')?.touched &&
+                      form.get('publication_date')?.invalid
+                    "
+                  >
+                    <small
+                      *ngIf="form.get('publication_date')?.hasError('required')"
+                    >
+                      Nashr sanasi kiritilishi shart.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Category -->
+              <div class="row">
+                <label class="col-sm-2 col-form-label" for="category"
+                  >Kategoriya</label
+                >
+                <div class="col-sm-10">
+                  <mat-form-field class="example-full-width">
+                    <mat-select
+                      id="category"
+                      formControlName="category"
+                      placeholder="Kategoriya tanlang"
+                    >
+                      <mat-option
+                        *ngFor="let c of categories"
+                        [value]="c.category_name"
+                      >
+                        {{ c.category_name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div
+                    class="error-msg"
+                    *ngIf="
+                      form.get('category')?.touched &&
+                      form.get('category')?.invalid
+                    "
+                  >
+                    <small>Kategoriya tanlanishi shart.</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Status -->
+              <div class="row">
+                <label class="col-sm-2 col-form-label" for="status"
+                  >Status</label
+                >
+                <div class="col-sm-10">
+                  <mat-form-field class="example-full-width">
+                    <mat-select
+                      id="status"
+                      formControlName="status"
+                      placeholder="Holat belgilang"
+                    >
+                      <mat-option *ngFor="let s of statusList" [value]="s">{{
+                        s
+                      }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div
+                    class="error-msg"
+                    *ngIf="
+                      form.get('status')?.touched && form.get('status')?.invalid
+                    "
+                  >
+                    <small>Holat belgilanishi shart.</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Book image Data -->
+              <label
+                class="custom-file-upload"
+                for="image"
+                [attr.data-file]="
+                  selectedFile?.name || 'Hech qanday fayl tanlanmagan'
+                "
+                >Kitob rasmi</label
+              >
+              <input
+                matInput
+                id="image"
+                type="file"
+                formControlName="image"
+                (change)="onFileSelected($event)"
+                accept="image/*"
+                class="file-input"
+              />
+              <div class="error-msg" *ngIf="form.get('image')?.touched">
+                <small *ngIf="bookForm.get('image')?.hasError('required')">
+                  Kitob surati talab qilinadi
+                </small>
+              </div>
+
+              <!-- Submit button -->
+              <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                  <button
+                    mat-raised-button
+                    color="rose"
+                    type="submit"
+                    [disabled]="form.invalid"
+                  >
+                    Tahrirlash
+                  </button>
+                </div>
+              </div>
+
+              <!-- Global error -->
+              <p class="backend-error" *ngIf="errorMessage">
+                {{ errorMessage }}
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- you can add more cards below if needed -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+<div class="main-content" *ngIf="userRole === 'user'">
+  <div class="container-fluid">
+    <!-- My Libraries Card -->
+    <div class="col-md-6 mb-4">
+      <div class="card library-card">
+        <div class="card-header library-card-header">
+          <h4 class="card-title">Men azo bo'lgan kutubxonalar ro'yxati</h4>
+        </div>
+        <div class="card-body library-card-body">
+          <!-- loading spinner -->
+          <div *ngIf="loading.userLibraries" class="text-center py-4">
+            <mat-spinner diameter="36"></mat-spinner>
+          </div>
+
+          <!-- empty state -->
+          <div
+            *ngIf="
+              !loading.userLibraries &&
+              libraries.length === 0 &&
+              libErrorMessage
+            "
+            class="text-center text-muted py-4"
+          >
+            {{ libErrorMessage }}
+          </div>
+
+          <!-- library list -->
+          <ul
+            *ngIf="!loading.userLibraries && libraries.length"
+            class="list-group library-list"
+          >
+            <li
+              *ngFor="let lib of libraries; let i = index"
+              class="list-group-item library-item"
+            >
+              <div class="library-index">{{ i + 1 }}</div>
+              <div class="library-details">
+                <h5 class="library-name">{{ lib.library_name }}</h5>
+                <p class="library-owner">
+                  <strong>Egasi:</strong> {{ lib.lib_owner_name }}
+                </p>
+                <p class="library-address">
+                  <strong>Manzil:</strong> {{ lib.lib_owner_address }}
+                </p>
+                <p class="library-email">
+                  <strong>Email:</strong> {{ lib.lib_owner_email }}
+                </p>
+              </div>
+              <mat-icon class="library-icon">location_city</mat-icon>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications for simple users -->
+    <div class="col-md-6 mb-4">
+      <div class="card notifications-card">
+        <div class="card-header">
+          <h4 class="card-title">Eslatmalar</h4>
+        </div>
+        <div class="card-body notifications-card-body">
+          <!-- loading spinner -->
+          <div *ngIf="loading.userNotifications" class="text-center">
+            <mat-spinner diameter="30"></mat-spinner>
+          </div>
+          <!-- no-notifs message -->
+          <div *ngIf="notifError" class="alert">
+            {{ notifError }}
+          </div>
+
+          <!-- actual alerts -->
+          <div
+            *ngFor="let n of userNotifications"
+            class="alert alert-warning"
+            [class.alert-secondary]="n.is_read"
+          >
+            <button
+              mat-button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="markAsRead(n)"
+            >
+              <i class="material-icons">close</i>
+            </button>
+            <span>
+              <b>{{ n.is_read ? "Read -" : "New -" }}</b> {{ n.message }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- For Admin Dashboard -->
+
+<div class="main-content" *ngIf="userRole === 'admin'">
+  <div class="container-fluid">
+    <h1>Assalom alaykum Admin</h1>
+  </div>
+</div>
+
+<!-- For owner Dashboard  -->
+
+<div class="main-content" *ngIf="userRole === 'owner'">
+  <div class="container-fluid">
+    <h1>Assalom alaykum Owner</h1>
+  </div>
+</div>

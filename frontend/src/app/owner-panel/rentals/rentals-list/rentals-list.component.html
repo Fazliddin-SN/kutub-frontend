@@ -1,0 +1,62 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Ijaralar Ro'yxati</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">{{ tableData1.headerRow[0] }}</th>
+                    <th>{{ tableData1.headerRow[1] }}</th>
+                    <th>{{ tableData1.headerRow[2] }}</th>
+                    <th>{{ tableData1.headerRow[3] }}</th>
+                    <th>{{ tableData1.headerRow[4] }}</th>
+                    <th>{{ tableData1.headerRow[5] }}</th>
+                    <th>{{ tableData1.headerRow[6] }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of rentals; let i = index">
+                    <th class="text-center">{{ i + 1 }}</th>
+                    <td>{{ userName(row.user_id) }}</td>
+                    <td>{{ bookName(row.book_id) }}</td>
+                    <td>{{ row.rental_date | date }}</td>
+                    <td>{{ row.due_date | date }}</td>
+                    <td>{{ row.return_date | date }}</td>
+                    <td class="td-actions text-right">
+                      <button
+                        mat-raised-button
+                        type="button"
+                        class="btn btn-success"
+                        (click)="edit(row.rental_id)"
+                      >
+                        <i class="material-icons">edit</i>
+                      </button>
+                      <button
+                        mat-raised-button
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="delete(row.rental_id, row.book_id)"
+                      >
+                        <i class="material-icons">assignment_returned</i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p *ngIf="errorMessage" class="backend-error">{{ errorMessage }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

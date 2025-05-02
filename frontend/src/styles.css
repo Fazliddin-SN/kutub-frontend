@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+.backend-error {
+  color: #f44336;
+  background-color: #ffebee;
+  border-left: 4px solid #f44336;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-top: 10px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

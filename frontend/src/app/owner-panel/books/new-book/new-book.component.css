@@ -1,0 +1,71 @@
+.backend-error {
+  color: #f44336;
+  background-color: #ffebee;
+  border-left: 4px solid #f44336;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-top: 10px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* hide the real file‐input */
+.file-input {
+  display: none;
+}
+
+/* Hide the real file input */
+.file-input {
+  display: none;
+}
+
+/* Style the label as a button */
+.custom-file-upload {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fafafa;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+/* Hover/focus states */
+.custom-file-upload:hover,
+.custom-file-upload:focus {
+  background-color: #f0f0f0;
+  border-color: #bbb;
+}
+
+/* Display selected filename (or placeholder) */
+.custom-file-upload::after {
+  content: attr(data-file);
+  display: inline-block;
+  margin-left: 1rem;
+  font-style: italic;
+  color: #555;
+  vertical-align: middle;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Error message below */
+.error-msg {
+  margin-top: 0.25rem;
+  color: #c62828;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,62 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Kitoblaringiz uchun Ijara so'rovlar!</h4>
+            <!-- Styled info box -->
+            <div class="card-header mt-2">
+              <p class="card-title" style="color: rgb(115, 39, 39)">
+                <strong>Eslatma:</strong> Ijara so'rovini tasdiqlang qachonki
+                siz so'ralgan kitobni ijaraga olishni xohlagan foydalnuvchiga
+                berishga qaror qilsangiz!
+              </p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">{{ tableData1.headerRow[0] }}</th>
+                    <th>{{ tableData1.headerRow[1] }}</th>
+                    <th>{{ tableData1.headerRow[2] }}</th>
+                    <th>{{ tableData1.headerRow[3] }}</th>
+                    <th>{{ tableData1.headerRow[4] }}</th>
+                    <th>{{ tableData1.headerRow[5] }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of rentalRequests; let i = index">
+                    <th class="text-center">{{ i + 1 }}</th>
+                    <td>{{ row.user_email }}</td>
+                    <td>{{ row.message }}</td>
+                    <td>{{ row.title }}</td>
+                    <td>{{ row.created_at | date }}</td>
+                    <td class="td-actions text-right">
+                      <button
+                        mat-raised-button
+                        type="button"
+                        class="btn btn-success"
+                        (click)="markAsRead(row)"
+                      >
+                        <i class="material-icons">done</i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p *ngIf="rentalRequestError" class="backend-error">
+              {{ rentalRequestError }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

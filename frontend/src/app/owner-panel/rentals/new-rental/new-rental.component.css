@@ -1,0 +1,47 @@
+/* reusable error message style */
+.error-text {
+  display: block; /* ensures it takes its own line */
+  color: #e53935; /* a clear “danger” red */
+  font-size: 0.875rem; /* slightly smaller than body text */
+  margin-top: 0.25rem; /* small gap from the field */
+  font-weight: 500; /* semi-bold for visibility */
+}
+
+/* optional: prepend a warning icon */
+.error-text::before {
+  content: "⚠️"; /* or use an <mat-icon> instead */
+  margin-right: 0.25em;
+}
+
+/* centered variant */
+.error-text.text-center {
+  text-align: center;
+}
+
+/* inline form-field variant */
+.form-group .error-text {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.backend-error {
+  color: #f44336;
+  background-color: #ffebee;
+  border-left: 4px solid #f44336;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-top: 10px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

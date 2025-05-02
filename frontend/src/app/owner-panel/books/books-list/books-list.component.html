@@ -1,0 +1,83 @@
+<div class="main-content book-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div
+            class="card-header card-header-rose card-header-icon book-card-header"
+          >
+            <div class="card-icon">
+              <i class="material-icons">books</i>
+            </div>
+            <h4 class="card-title">Kitoblar Ro'yxati</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table book-table">
+                <thead>
+                  <tr>
+                    <th class="text-center">{{ tableData1.headerRow[0] }}</th>
+                    <th>{{ tableData1.headerRow[1] }}</th>
+                    <th>{{ tableData1.headerRow[2] }}</th>
+                    <th>{{ tableData1.headerRow[3] }}</th>
+                    <th>{{ tableData1.headerRow[4] }}</th>
+                    <th>{{ tableData1.headerRow[5] }}</th>
+                    <th>{{ tableData1.headerRow[6] }}</th>
+                    <th>{{ tableData1.headerRow[7] }}</th>
+                    <th>{{ tableData1.headerRow[8] }}</th>
+                    <th class="text-right">{{ tableData1.headerRow[8] }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of books; let i = index" class="book-row">
+                    <td
+                      class="text-center index-cell"
+                      style="font-weight: bolder"
+                    >
+                      {{ i + 1 }}
+                    </td>
+                    <td class="cover-cell">
+                      <div class="img-container" class="cover-img-container">
+                        <img
+                          class="cover-img"
+                          [src]="row.image_path"
+                          alt="Kitob rasmi"
+                        />
+                      </div>
+                    </td>
+                    <td>{{ row.title }}</td>
+                    <td>{{ row.author }}</td>
+                    <td>{{ row.isbn }}</td>
+                    <td>{{ getCategoryName(row.category_id) }}</td>
+                    <td>{{ row.publication_date | date }}</td>
+                    <td>{{ row.status }}</td>
+                    <td>{{ row.read_count }}</td>
+                    <td class="td-actions text-right">
+                      <button
+                        mat-raised-button
+                        type="button"
+                        class="btn btn-success"
+                        (click)="edit(row.book_id)"
+                      >
+                        <i class="material-icons">edit</i>
+                      </button>
+                      <button
+                        mat-raised-button
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="delete(row.book_id)"
+                      >
+                        <i class="material-icons">delete</i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <p class="backend-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </div>
+    </div>
+  </div>
+</div>

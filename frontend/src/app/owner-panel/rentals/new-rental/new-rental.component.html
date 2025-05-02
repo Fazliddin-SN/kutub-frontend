@@ -1,0 +1,154 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Card wrapper -->
+      <div class="col-md-12">
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header card-header-rose card-header-text">
+            <div class="card-text">
+              <h4 class="card-title">Yangi Ijara Qo'shish</h4>
+            </div>
+          </div>
+
+          <!-- Card body with rentalForm -->
+          <div class="card-body">
+            <form
+              [formGroup]="rentalForm"
+              (ngSubmit)="onSubmit()"
+              class="form-horizontal rental-form"
+            >
+              <!-- User select -->
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="user_id">
+                  Foydalanuvchini Tanlang
+                </label>
+                <div class="col-sm-10">
+                  <mat-form-field
+                    appearance="outline"
+                    class="example-full-width"
+                  >
+                    <mat-label>Foydalanuvchini Tanlang</mat-label>
+                    <mat-select formControlName="user_id" required>
+                      <mat-option disabled value=""> -- Tanlang -- </mat-option>
+                      <mat-option *ngFor="let m of members" [value]="m.user_id">
+                        {{ m.username }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <!-- Book select -->
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="book_id">
+                  Kitobni Tanlang
+                </label>
+                <div class="col-sm-10">
+                  <mat-form-field
+                    appearance="outline"
+                    class="example-full-width"
+                  >
+                    <mat-label>Kitobni Tanlang</mat-label>
+                    <mat-select formControlName="book_id" required>
+                      <mat-option disabled value=""> -- Tanlang -- </mat-option>
+                      <mat-option *ngFor="let b of books" [value]="b.book_id">
+                        {{ b.title }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <!-- Rental start date -->
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="rental_date">
+                  Ijaraga Berish Sanasi
+                </label>
+                <div class="col-sm-10">
+                  <mat-form-field
+                    appearance="outline"
+                    class="example-full-width"
+                  >
+                    <mat-label>Ijaraga Berish Sanasi</mat-label>
+                    <input
+                      matInput
+                      type="date"
+                      id="rental_date"
+                      formControlName="rental_date"
+                      required
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <!-- Due date -->
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="due_date">
+                  Ogohlantirish Sanasi
+                </label>
+                <div class="col-sm-10">
+                  <mat-form-field
+                    appearance="outline"
+                    class="example-full-width"
+                  >
+                    <mat-label>Ogohlantirish Sanasi</mat-label>
+                    <input
+                      matInput
+                      type="date"
+                      id="due_date"
+                      formControlName="due_date"
+                      required
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <!-- Return date -->
+              <div class="row mb-4">
+                <label class="col-sm-2 col-form-label" for="return_date">
+                  Qaytarish Sanasi
+                </label>
+                <div class="col-sm-10">
+                  <mat-form-field
+                    appearance="outline"
+                    class="example-full-width"
+                  >
+                    <mat-label>Qaytarish Sanasi</mat-label>
+                    <input
+                      matInput
+                      type="date"
+                      id="return_date"
+                      formControlName="return_date"
+                      required
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <!-- Submit button -->
+              <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 text-right">
+                  <button
+                    mat-raised-button
+                    color="rose"
+                    type="submit"
+                    [disabled]="rentalForm.invalid"
+                  >
+                    Ijaraga Berish
+                  </button>
+                </div>
+              </div>
+
+              <!-- Global error -->
+              <p class="backend-error" *ngIf="errorMessage">
+                {{ errorMessage }}
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
