@@ -203,7 +203,17 @@
               </div>
 
               <!-- Book image Data -->
-
+              <!-- image preview -->
+              <div class="image-wrapper">
+                <img
+                  *ngIf="imagePreview; else placeholder"
+                  [src]="imagePreview"
+                  class="image-img"
+                />
+                <ng-template #placeholder>
+                  <mat-icon class="image-placeholder">book</mat-icon>
+                </ng-template>
+              </div>
               <label
                 class="custom-file-upload"
                 for="image"

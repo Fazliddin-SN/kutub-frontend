@@ -93,11 +93,15 @@ export class NewBookComponent {
     });
   }
   selectedFile: File | null = null;
-
+  imagePreview: string | ArrayBuffer | null = null;
   onFileSelected(event: any) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length) {
       this.selectedFile = input.files[0];
+      //preview
+      const reader = new FileReader();
+      reader.onload = () => (this.imagePreview = reader.result);
+      reader.readAsDataURL(this.selectedFile);
     }
   }
   // sending data to backend via bookService

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "src/app/services/auth-service";
@@ -14,12 +14,8 @@ export class EditProfileComponent implements OnInit {
   avatarPreview: string | ArrayBuffer | null = null;
   laoding = false;
   errorMessage: string = "";
-  router: Router;
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    router: Router
-  ) {}
+  router = inject(Router);
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
     // build the form

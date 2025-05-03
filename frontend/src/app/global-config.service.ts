@@ -9,7 +9,7 @@ import { DecodedToken } from "./interfaces/token.model";
 })
 export class GlobalConfigService {
   // readonly baseUrl = "http://185.196.213.248:3017";
-  readonly baseUrl = "http://localhost:3007";
+  readonly baseUrl = "http://localhost:3017";
   private http = inject(HttpClient);
 
   // BehaviorSubject holds the “current” list of categories
