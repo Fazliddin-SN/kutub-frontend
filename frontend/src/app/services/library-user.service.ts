@@ -31,9 +31,24 @@ export class LibraryUserService {
   }
 
   // fetching members details
-  getMembers(): Observable<{ members: LibraryUser[] }> {
-    return this.http.get<{ members: LibraryUser[] }>(
-      `${this.baseUrl}/library/members`,
+  getMembers(currentPage: number = 0): Observable<any> {
+    // console.log("current page", currentPage);
+
+    return this.http.get<any>(
+      `${this.baseUrl}/library/members?page=` + currentPage + `&size=15`,
+      { headers: this.headers }
+    );
+  }
+  // fetching members details
+  getMembersWithFilter(
+    currentPage: number,
+    filterLink: string
+  ): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/library/members?page=` +
+        currentPage +
+        `&size=2` +
+        filterLink,
       { headers: this.headers }
     );
   }

@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="card">
+        <div class="card" id="listcard">
           <div
             class="card-header card-header-rose card-header-icon book-card-header"
           >
@@ -12,67 +12,201 @@
             <h4 class="card-title">Kitoblar Ro'yxati</h4>
           </div>
           <div class="card-body">
-            <div class="table-responsive">
-              <table class="table book-table">
-                <thead>
-                  <tr>
-                    <th class="text-center">{{ tableData1.headerRow[0] }}</th>
-                    <th>{{ tableData1.headerRow[1] }}</th>
-                    <th>{{ tableData1.headerRow[2] }}</th>
-                    <th>{{ tableData1.headerRow[3] }}</th>
-                    <th>{{ tableData1.headerRow[4] }}</th>
-                    <th>{{ tableData1.headerRow[5] }}</th>
-                    <th>{{ tableData1.headerRow[6] }}</th>
-                    <th>{{ tableData1.headerRow[7] }}</th>
-                    <th>{{ tableData1.headerRow[8] }}</th>
-                    <th class="text-right">{{ tableData1.headerRow[8] }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let row of books; let i = index" class="book-row">
-                    <td
-                      class="text-center index-cell"
-                      style="font-weight: bolder"
+            <div class="material-datatables">
+              <div class="row">
+                <!-- Filter based on book category -->
+                <div class="col-sm-4 col-lg-3">
+                  <mat-form-field>
+                    <mat-select
+                      placeholder="Kategoriyasi bo'yicha"
+                      name="category"
                     >
-                      {{ i + 1 }}
-                    </td>
-                    <td class="cover-cell">
-                      <div class="img-container" class="cover-img-container">
-                        <img
-                          class="cover-img"
-                          [src]="row.image_path"
-                          alt="Kitob rasmi"
-                        />
-                      </div>
-                    </td>
-                    <td>{{ row.title }}</td>
-                    <td>{{ row.author }}</td>
-                    <td>{{ row.isbn }}</td>
-                    <td>{{ getCategoryName(row.category_id) }}</td>
-                    <td>{{ row.publication_date | date }}</td>
-                    <td>{{ row.status }}</td>
-                    <td>{{ row.read_count }}</td>
-                    <td class="td-actions text-right">
-                      <button
-                        mat-raised-button
-                        type="button"
-                        class="btn btn-success"
-                        (click)="edit(row.book_id)"
+                      <mat-option [value]="null" (click)="loadBooks()"
+                        >None</mat-option
                       >
-                        <i class="material-icons">edit</i>
-                      </button>
-                      <button
-                        mat-raised-button
-                        type="button"
-                        class="btn btn-danger"
-                        (click)="delete(row.book_id)"
+                      <mat-option
+                        *ngFor="let cat of categories"
+                        [value]="cat.category_id"
+                        (click)="
+                          getListOfBooksWIthFilter(cat.category_id, '', '', '')
+                        "
                       >
-                        <i class="material-icons">delete</i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                        {{ cat.category_name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <!-- filter based on book title -->
+                <div class="col-sm-4 col-lg-3" style="display: inline-flex">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      type="text"
+                      placeholder="Kitob nomi bo'yicha"
+                      (input)="
+                        getListOfBooksWIthFilter(
+                          '',
+                          $event.target.value,
+                          '',
+                          ''
+                        )
+                      "
+                    />
+                  </mat-form-field>
+                </div>
+
+                <!-- Kitob ISBNi boyicha -->
+                <div class="col-sm-3 col-lg-2" style="display: inline-flex">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      type="text"
+                      placeholder="Kitob ISBNi"
+                      (input)="
+                        getListOfBooksWIthFilter(
+                          '',
+                          '',
+                          $event.target.value,
+                          ''
+                        )
+                      "
+                    />
+                  </mat-form-field>
+                </div>
+                <!-- Kitob Statusi bo'yicha filter -->
+                <div class="col-sm-4 col-lg-3">
+                  <mat-form-field>
+                    <mat-select
+                      placeholder="Kitob statusi bo'yicha"
+                      name="status"
+                    >
+                      <mat-option [value]="null" (click)="loadBooks()"
+                        >None</mat-option
+                      >
+                      <mat-option
+                        *ngFor="let status of statusList"
+                        [value]="status"
+                        (click)="getListOfBooksWIthFilter('', '', '', status)"
+                      >
+                        {{ status }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <!--   <div class="col-sm-6 col-lg-3">
+                                  <div class="dropdown">
+                                      <button mat-raised-button href="#pablo" class="dropdown-toggle btn btn-primary btn-round btn-block" data-toggle="dropdown">Dropdown
+                                          <b class="caret"></b>
+                                      </button>
+                                      <ul class="dropdown-menu dropdown-menu-left">
+                                          <li *ngFor="let rk of orderStatusTypeList; let i = index">
+                                            <a href="#pablo">{{rk.descriptionEn}}</a>
+                                        </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <div class="col-sm-6 col-lg-3">
+                                <div class="dropdown">
+                                  <button mat-raised-button href="#pablo" class="dropdown-toggle btn btn-primary btn-round btn-block" data-toggle="dropdown">Product Type
+                                      <b class="caret"></b>
+                                  </button>
+                                  <ul class="dropdown-menu dropdown-menu-left">
+                                      <li class="dropdown-header">Order Types</li>
+                                      <li *ngFor="let rw of orderTypesList; let i = index">
+                                          <a href="#pablo">{{rw.descriptionEn}}</a>
+                                      </li>
+                                  </ul>
+                              </div> 
+                              
+                          </div> -->
+              </div>
+              <div class="table-responsive">
+                <ul class="pagination" *ngIf="needPagination">
+                  <!--  <li class="page-item">
+                            <a mat-button class="page-link" aria-label="Previous">
+                              <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
+                            </a>
+                          </li> -->
+                  <li
+                    class="page-item"
+                    [ngClass]="{ active: currentPage == i }"
+                    *ngFor="let page of mypages; index as i"
+                  >
+                    <a mat-button class="page-link" (click)="pagebyNum(i)">{{
+                      i + 1
+                    }}</a>
+                  </li>
+                  <!-- <li class="page-item">
+                            <a mat-button class="page-link" aria-label="Next">
+                              <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
+                            </a>
+                          </li> -->
+                </ul>
+                <table class="table book-table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">{{ tableData1.headerRow[0] }}</th>
+                      <th>{{ tableData1.headerRow[1] }}</th>
+                      <th>{{ tableData1.headerRow[2] }}</th>
+                      <th>{{ tableData1.headerRow[3] }}</th>
+                      <th>{{ tableData1.headerRow[4] }}</th>
+                      <th>{{ tableData1.headerRow[5] }}</th>
+                      <th>{{ tableData1.headerRow[6] }}</th>
+                      <th>{{ tableData1.headerRow[7] }}</th>
+                      <th>{{ tableData1.headerRow[8] }}</th>
+                      <th class="text-right">{{ tableData1.headerRow[8] }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let row of books; let i = index"
+                      class="book-row"
+                    >
+                      <td
+                        class="text-center index-cell"
+                        style="font-weight: bolder"
+                      >
+                        {{ i + 1 }}
+                      </td>
+                      <td class="cover-cell">
+                        <div class="img-container" class="cover-img-container">
+                          <img
+                            class="cover-img"
+                            [src]="row.image_path"
+                            alt="Kitob rasmi"
+                          />
+                        </div>
+                      </td>
+                      <td class="title">{{ row.title }}</td>
+                      <td>{{ row.author }}</td>
+                      <td>{{ row.isbn }}</td>
+                      <td>{{ getCategoryName(row.category_id) }}</td>
+                      <td>{{ row.publication_date | date }}</td>
+                      <td>{{ row.status }}</td>
+                      <td>{{ row.read_count }}</td>
+                      <td class="td-actions text-right">
+                        <button
+                          mat-raised-button
+                          type="button"
+                          class="btn btn-success"
+                          (click)="edit(row.book_id)"
+                        >
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button
+                          mat-raised-button
+                          type="button"
+                          class="btn btn-danger"
+                          (click)="delete(row.book_id)"
+                        >
+                          <i class="material-icons">delete</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

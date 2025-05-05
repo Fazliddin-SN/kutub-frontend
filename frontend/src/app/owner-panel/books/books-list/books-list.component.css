@@ -29,6 +29,12 @@
     border-bottom: 1px solid #e0e0e0;
   }
 
+  td.title {
+    font-family: "Playfair Display", serif;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+  }
+
   thead {
     th {
       background-color: #fafafa;

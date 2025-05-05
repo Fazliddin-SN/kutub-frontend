@@ -1,6 +1,13 @@
-import { Component, inject, OnDestroy, OnInit } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { GlobalConfigService } from "src/app/global-config.service";
+import { AuthService } from "src/app/services/auth-service";
 import { BookService } from "src/app/services/book.service";
 import { Book } from "src/interfaces/book.model";
 import { Category } from "src/interfaces/category.model";
@@ -14,25 +21,35 @@ declare interface TableData {
   templateUrl: "./books-list.component.html",
   styleUrls: ["./books-list.component.css"],
 })
-export class BooksListComponent implements OnInit {
+export class BooksListComponent implements OnInit, AfterViewInit {
   private bookService = inject(BookService);
   private route = inject(ActivatedRoute);
   private config = inject(GlobalConfigService);
   private router = inject(Router);
-
+  private authService = inject(AuthService);
   //
   categories: Category[] = [];
   books: Book[] = [];
   tableData1: TableData;
   errorMessage: string = "";
 
-  // ng
-
+  // pagination
+  currentPage: number = 0;
+  totalPages: number;
+  needPagination: boolean;
+  mypages = [];
+  isPagesActive: boolean;
+  // status needed for filter
+  statusList: string[] = ["mavjud", "ijarada"];
   ngOnInit(): void {
-    this.loadBooks();
+    // pagination
+    this.currentPage = 0;
+    this.needPagination = false;
+    this.isPagesActive = false;
+
     this.config.categories$.subscribe({
       next: (cats) => {
-        console.log("categories", cats);
+        // console.log("categories", cats);
         this.categories = cats;
       },
       error: (err) => {
@@ -56,12 +73,29 @@ export class BooksListComponent implements OnInit {
     };
   }
 
+  pagebyNum(ipage) {
+    console.log(ipage);
+    this.currentPage = ipage;
+    this.isPagesActive = true;
+    document.getElementById("listcard").scrollIntoView();
+    this.loadBooks();
+  }
+
   // fetching book Data
-  private loadBooks() {
-    this.bookService.getBooks().subscribe({
+  loadBooks() {
+    this.bookService.getBooks(this.currentPage).subscribe({
       next: (res) => {
         this.books = res.books;
-        console.log("books", this.books);
+        this.currentPage = res.currentPage;
+        this.totalPages = res.totalPages;
+
+        if (this.totalPages > 1) {
+          this.needPagination = true;
+          for (let i = 0; i < this.totalPages; i++) {
+            this.mypages[i] = { id: "name" };
+          }
+        }
+        // console.log("books", this.books);
       },
       error: (err) => {
         //
@@ -70,6 +104,46 @@ export class BooksListComponent implements OnInit {
     });
   }
 
+  getListOfBooksWIthFilter(
+    categoryId: string,
+    bookTitle: string,
+    isbn: string,
+    status: string
+  ) {
+    let filterLink =
+      "&categoryId=" +
+      categoryId +
+      "&bookTitle=" +
+      bookTitle +
+      "&isbn=" +
+      isbn +
+      "&status=" +
+      status;
+    // console.log("status ", status);
+
+    this.bookService
+      .getBooksWithFilter(this.currentPage, filterLink)
+      .subscribe({
+        next: (res) => {
+          this.books = res.books;
+          this.currentPage = res.currentPage;
+          this.totalPages = res.totalPages;
+
+          if (this.totalPages > 1) {
+            this.needPagination = true;
+            for (let i = 0; i < this.totalPages; i++) {
+              this.mypages[i] = { id: "name" };
+            }
+          }
+        },
+        error: (err) => {
+          this.errorMessage = err.error.error;
+          if (err.status === 403) {
+            this.authService.logout();
+          }
+        },
+      });
+  }
   ngOnDestroy(): void {}
   // get category name
   getCategoryName(cat_id: string) {
@@ -81,6 +155,10 @@ export class BooksListComponent implements OnInit {
     // console.log(catname);
 
     return catname;
+  }
+
+  ngAfterViewInit(): void {
+    return this.loadBooks();
   }
 
   // this navigates to delete component

@@ -23,12 +23,24 @@ export class BookService {
     Authorization: `Bearer ${this.token}`,
   });
   // fetching all books that belong to a specific library
-  getBooks(): Observable<{ books: Book[] }> {
-    return this.http.get<{ books: Book[] }>(`${this.baseUrl}/library/books`, {
-      headers: this.headers,
-    });
+  getBooks(currentPage: number = 0): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/library/books?page=` + currentPage + "&size=10",
+      {
+        headers: this.headers,
+      }
+    );
   }
-
+  // getting books by filter (category, title and isbn)
+  getBooksWithFilter(currentPage: number, filterLink: string): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/library/books?page=` +
+        currentPage +
+        "&size=10" +
+        filterLink,
+      { headers: this.headers }
+    );
+  }
   // create book
   addNewBook(bookData: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/books/add`, bookData, {

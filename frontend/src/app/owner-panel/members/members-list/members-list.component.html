@@ -2,59 +2,175 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="card">
-          <div class="card-header card-header-rose card-header-icon">
-            <div class="card-icon">
-              <i class="material-icons">assignment</i>
+        <div class="card" id="listcard">
+          <div
+            class="card-header row card-header-primary card-header-icon"
+            style="display: inline-flex"
+          >
+            <div class="col align-self-start">
+              <div class="card-icon">
+                <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title">Foydalanuvchilar Ro'yxati</h4>
             </div>
-            <h4 class="card-title">Foydalanuvchilar Ro'yxati</h4>
           </div>
+
           <div class="card-body">
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="text-center">{{ tableData1.headerRow[0] }}</th>
-                    <th>{{ tableData1.headerRow[1] }}</th>
-                    <th>{{ tableData1.headerRow[2] }}</th>
-                    <th>{{ tableData1.headerRow[3] }}</th>
-                    <th>{{ tableData1.headerRow[4] }}</th>
-                    <th>{{ tableData1.headerRow[5] }}</th>
-                    <th>{{ tableData1.headerRow[6] }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let row of members">
-                    <td class="text-center">{{ row.user_id }}</td>
-                    <td>{{ row.full_name }}</td>
-                    <td>{{ row.username }}</td>
-                    <td>{{ row.email }}</td>
-                    <td>{{ row.address }}</td>
-                    <td>{{ row.phonenumber }}</td>
-                    <td class="td-actions text-right">
-                      <button
-                        mat-raised-button
-                        type="button"
-                        class="btn btn-success"
-                        (click)="edit(row.user_id)"
-                      >
-                        <i class="material-icons">edit</i>
-                      </button>
-                      <button
-                        mat-raised-button
-                        type="button"
-                        class="btn btn-danger"
-                        (click)="delete(row.user_id)"
-                      >
-                        <i class="material-icons">delete</i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="material-datatables">
+              <div class="row">
+                <div class="col-sm-6 col-lg-4">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      type="text"
+                      placeholder="Foydalanuvchi nomi bo'yicha"
+                      (input)="
+                        getListOfMemsWithFilter($event.target.value, '', '')
+                      "
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      type="text"
+                      placeholder="Email bo'yicha"
+                      (input)="
+                        getListOfMemsWithFilter('', $event.target.value, '')
+                      "
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      type="text"
+                      placeholder="Tel raqami"
+                      (input)="
+                        getListOfMemsWithFilter('', '', $event.target.value)
+                      "
+                    />
+                  </mat-form-field>
+                </div>
+                <!-- <div class="col-sm-6 col-lg-3">
+                  <div class="dropdown">
+                    <button
+                      mat-raised-button
+                      (click)="getListOfMemsWithFilter('', '', '')"
+                      class="dropdown-toggle btn btn-primary btn-round btn-block"
+                      data-toggle="dropdown"
+                    >
+                      LIMIT
+                      <b class="caret"></b>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-left">
+                      <li>
+                        <a (click)="getListOfMemsWithFilter('', '', '')"
+                          >Limit ochiq</a
+                        >
+                      </li>
+                      <li>
+                        <a (click)="getListOfMemsWithFilter('', '', '')"
+                          >Yaqinlashgan</a
+                        >
+                      </li>
+                      <li>
+                        <a (click)="getListOfMemsWithFilter('', '', '')"
+                          >Limit to'lgan</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div> -->
+                <!--   <div class="col-sm-6 col-lg-3">
+                            <div class="dropdown">
+                              <button mat-raised-button href="#pablo" class="dropdown-toggle btn btn-primary btn-round btn-block" data-toggle="dropdown">Product Type
+                                  <b class="caret"></b>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-left">
+                                  <li class="dropdown-header">Order Types</li>
+                                  <li *ngFor="let rw of orderTypesList; let i = index">
+                                      <a href="#pablo">{{rw.descriptionEn}}</a>
+                                  </li>
+                              </ul>
+                          </div> 
+                          
+                      </div> -->
+              </div>
+              <div class="table-responsive">
+                <ul class="pagination" *ngIf="needPagination">
+                  <!--  <li class="page-item">
+                            <a mat-button class="page-link" aria-label="Previous">
+                              <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
+                            </a>
+                          </li> -->
+                  <li
+                    class="page-item"
+                    [ngClass]="{ active: currentPage == i }"
+                    *ngFor="let page of mypages; index as i"
+                  >
+                    <a mat-button class="page-link" (click)="pagebyNum(i)">{{
+                      i + 1
+                    }}</a>
+                  </li>
+                  <!-- <li class="page-item">
+                            <a mat-button class="page-link" aria-label="Next">
+                              <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
+                            </a>
+                          </li> -->
+                </ul>
+                <table
+                  class="table table-striped table-no-bordered table-hover"
+                  cellspacing="0"
+                  width="100%"
+                  style="width: 100%"
+                >
+                  <thead>
+                    <tr>
+                      <th class="text-center">{{ tableData1.headerRow[0] }}</th>
+                      <th>{{ tableData1.headerRow[1] }}</th>
+                      <th>{{ tableData1.headerRow[2] }}</th>
+                      <th>{{ tableData1.headerRow[3] }}</th>
+                      <th>{{ tableData1.headerRow[4] }}</th>
+                      <th>{{ tableData1.headerRow[5] }}</th>
+                      <th>{{ tableData1.headerRow[6] }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of members; let i = index">
+                      <td class="text-center">{{ i + 1 }}</td>
+                      <td>{{ row.full_name }}</td>
+                      <td>{{ row.username }}</td>
+                      <td>{{ row.email }}</td>
+                      <td>{{ row.address }}</td>
+                      <td>{{ row.phonenumber }}</td>
+                      <td class="td-actions text-right">
+                        <button
+                          mat-raised-button
+                          type="button"
+                          class="btn btn-success"
+                          (click)="edit(row.user_id)"
+                        >
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button
+                          mat-raised-button
+                          type="button"
+                          class="btn btn-danger"
+                          (click)="delete(row.user_id)"
+                        >
+                          <i class="material-icons">delete</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
+            <p *ngIf="errorMessage" class="backend-error">{{ errorMessage }}</p>
           </div>
-          <p *ngIf="errorMessage" class="backend-error">{{ errorMessage }}</p>
         </div>
       </div>
     </div>
