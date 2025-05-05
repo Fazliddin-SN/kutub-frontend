@@ -68,4 +68,11 @@ export class BookService {
       headers: this.headers,
     });
   }
+
+  // getting library details
+  getLibDetails(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/library/details`, {
+      headers: this.headers,
+    });
+  }
 }

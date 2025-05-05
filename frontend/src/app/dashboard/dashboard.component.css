@@ -113,3 +113,60 @@
 .notifications-card .text-center {
   padding: 24px 0;
 }
+/* 
+owner dashboard */
+
+/* owner-dashboard.component.css */
+
+/* Hero Banner Gradient */
+.hero-banner {
+  background: linear-gradient(135deg, #764ba2, #667eea);
+}
+
+/* Hero Icon */
+.hero-icon {
+  font-size: 4rem;
+  color: #fff;
+}
+
+/* Metrics Card Base */
+.metric-card {
+  border: none;
+  border-radius: 0.75rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Icon Badges */
+.icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  color: #fff;
+}
+.books-badge {
+  background: #17a2b8;
+} /* info */
+.users-badge {
+  background: #28a745;
+} /* success */
+.rentals-badge {
+  background: #ffc107; /* warning */
+  color: #212529;
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+  .hero-banner {
+    padding: 3rem 1rem;
+  }
+  .hero-icon {
+    font-size: 3rem;
+  }
+}

@@ -1,9 +1,9 @@
-import { Component, inject, OnInit } from "@angular/core";
+import { AfterViewInit, Component, inject, OnInit } from "@angular/core";
 import { SimpleUserService } from "../services/simple-user.service";
-import { LibraryData } from "../interfaces/library.model";
 import { NotificationsService } from "../services/notifications.service";
 import { UserNotification } from "../interfaces/notification.model";
-import * as Chartist from "chartist";
+
+import { BookService } from "../services/book.service";
 
 declare const $: any;
 
@@ -12,8 +12,9 @@ declare const $: any;
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.css"],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
   private usersService = inject(SimpleUserService);
+  private booksService = inject(BookService);
   private notifService = inject(NotificationsService);
 
   // libraries
@@ -81,5 +82,27 @@ export class DashboardComponent implements OnInit {
     this.notifService.markRead(n.notification_id).subscribe(() => {
       n.is_read = true;
     });
+  }
+
+  // getting library details for library owner. total count of books, members and active rentals
+
+  totalBooksCount: string;
+  totalMembersCount: string;
+  totalActRentCount: string;
+  libraryName: string;
+  libDetailsError: string = "";
+  getLibDetails() {
+    return this.booksService.getLibDetails().subscribe({
+      next: (res) => {
+        this.totalBooksCount = res.totalBooks;
+        this.totalMembersCount = res.totalMembers;
+        this.totalActRentCount = res.totalActiveRentals;
+        this.libraryName = res.libName;
+      },
+      error: (err) => (this.libDetailsError = err.error.error),
+    });
+  }
+  ngAfterViewInit(): void {
+    this.getLibDetails();
   }
 }

@@ -104,8 +104,72 @@
 
 <!-- For owner Dashboard  -->
 
+<!-- owner-dashboard.component.html -->
 <div class="main-content" *ngIf="userRole === 'owner'">
   <div class="container-fluid">
-    <h1>Assalom alaykum Owner</h1>
+    <!-- Hero Banner -->
+    <div class="hero-banner text-white text-center rounded-3 p-5 mb-5">
+      <i class="material-icons hero-icon mb-3">location_city</i>
+      <h1 class="display-3 fw-bold">{{ libraryName }}</h1>
+      <p class="lead">Sizning kutubxonangiz — Kitoblar, A'zolar & Ijaralar!</p>
+    </div>
+
+    <!-- Metrics Row -->
+    <div class="row g-4">
+      <!-- Total Books -->
+      <div class="col-sm-6 col-lg-4">
+        <a class="text-decoration-none">
+          <div class="card metric-card shadow-sm h-100">
+            <div class="card-body d-flex align-items-center">
+              <div class="icon-badge books-badge me-3">
+                <i class="material-icons fs-2">menu_book</i>
+              </div>
+              <div>
+                <h2 class="h1 mb-1">{{ totalBooksCount }}</h2>
+                <p class="mb-0 text-muted">
+                  Kutubxona kitoblarining umumiy soni
+                </p>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Library Members -->
+      <div class="col-sm-6 col-lg-4">
+        <a class="text-decoration-none">
+          <div class="card metric-card shadow-sm h-100">
+            <div class="card-body d-flex align-items-center">
+              <div class="icon-badge users-badge me-3">
+                <i class="material-icons fs-2">group</i>
+              </div>
+              <div>
+                <h2 class="h1 mb-1">{{ totalMembersCount }}</h2>
+                <p class="mb-0 text-muted">
+                  Kutubxona a'zolarining umumiy soni
+                </p>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Active Rentals -->
+      <div class="col-sm-6 col-lg-4">
+        <a class="text-decoration-none">
+          <div class="card metric-card shadow-sm h-100">
+            <div class="card-body d-flex align-items-center">
+              <div class="icon-badge rentals-badge me-3">
+                <i class="material-icons fs-2">book_online</i>
+              </div>
+              <div>
+                <h2 class="h1 mb-1">{{ totalActRentCount }}</h2>
+                <p class="mb-0 text-muted">Active ijaralarning umumiy soni</p>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 </div>

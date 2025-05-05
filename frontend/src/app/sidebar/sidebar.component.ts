@@ -57,7 +57,7 @@ export const ownerROUTES: RouteInfo[] = [
     path: "/owner/library/rentals",
     title: "Ijaralar",
     type: "sub",
-    icontype: "library_books",
+    icontype: "menu_book",
     collapse: "rentals",
     children: [
       { path: "list", title: "Ijaralar Ro'yxati", ab: "IR" },
