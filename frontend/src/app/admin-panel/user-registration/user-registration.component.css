@@ -19,3 +19,32 @@
     transform: translateY(0);
   }
 }
+
+/* Password */
+
+/* Wrap the whole row nicely and center it if needed */
+.password-row {
+  margin: 1rem 0;
+}
+
+/* Make sure the mat-form-field takes full width */
+.password-row .mat-form-field {
+  width: 100%;
+}
+
+/* Style the eye icon so it looks clickable and integrates with the input */
+.toggle-password-icon {
+  cursor: pointer;
+  user-select: none;
+  color: rgba(0, 0, 0, 0.6);
+  transition: color 0.2s ease, transform 0.2s ease;
+  /* bump it out a little so it doesn't feel cramped */
+  margin-left: 0.25rem;
+}
+
+/* Hover/focus states to give feedback */
+.toggle-password-icon:hover,
+.toggle-password-icon:focus {
+  color: rgba(0, 0, 0, 0.87);
+  transform: scale(1.1);
+}

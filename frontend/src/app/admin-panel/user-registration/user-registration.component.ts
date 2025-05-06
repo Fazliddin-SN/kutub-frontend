@@ -129,4 +129,11 @@ export class UserRegistrationComponent {
     localStorage.removeItem("saved-register-form");
     this.router.navigate(["/dashboard"]);
   }
+
+  // toggling password visibility
+  showPassword: boolean = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 }

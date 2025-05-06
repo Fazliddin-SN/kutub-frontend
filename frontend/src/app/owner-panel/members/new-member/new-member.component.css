@@ -19,3 +19,26 @@
     transform: translateY(0);
   }
 }
+
+/* Password visibility */
+
+/* make sure the mat-form-field is full width */
+.password-row .mat-form-field {
+  width: 100%;
+}
+
+/* style the clickable eye icon */
+.toggle-password-icon {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.54); /* matches default placeholder color */
+  transition: color 0.2s;
+}
+
+.toggle-password-icon:hover {
+  color: rgba(0, 0, 0, 0.87); /* darker on hover */
+}
+
+/* if you need extra spacing inside the form-field */
+.position-relative {
+  position: relative;
+}

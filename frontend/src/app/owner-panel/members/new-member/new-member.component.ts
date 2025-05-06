@@ -98,4 +98,12 @@ export class NewMemberComponent implements OnInit {
         },
       });
   }
+
+  // password showing feature
+  password: string = "";
+  showPassword: boolean = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 }

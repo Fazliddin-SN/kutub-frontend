@@ -87,6 +87,7 @@
                     </div>
                   </div>
                 </span>
+                <!-- Password -->
                 <span class="bmd-form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -94,6 +95,7 @@
                         <i class="material-icons">lock_outline</i>
                       </span>
                     </div>
+
                     <input
                       [type]="showPassword ? 'text' : 'password'"
                       class="form-control"
@@ -101,30 +103,25 @@
                       formControlName="password"
                       id="password"
                     />
-
-                    <div
-                      *ngIf="
-                        loginForm.get('password').touched &&
-                        loginForm.get('password').invalid
-                      "
+                    <mat-icon
+                      matSuffix
+                      class="toggle-password-icon"
+                      (click)="togglePasswordVisibility()"
+                      >{{
+                        showPassword ? "visibility_off" : "visibility"
+                      }}</mat-icon
                     >
-                      <span class="alert alert-danger"
-                        >password kiritilishi shart.</span
-                      >
-                    </div>
                   </div>
-                </span>
-
-                <span class="bmd-form-group">
-                  <div class="input-group">
-                    <div class="password">
-                      <input
-                        type="checkbox"
-                        (click)="togglePasswordVisibility()"
-                        id="showPassword"
-                      />
-                      <span>Parolni ko'rsatish</span>
-                    </div>
+                  <div
+                    *ngIf="
+                      loginForm.get('password')?.touched &&
+                      loginForm.get('password')?.invalid
+                    "
+                    class="mt-2"
+                  >
+                    <span class="alert alert-danger"
+                      >password kiritilishi shart.</span
+                    >
                   </div>
                 </span>
               </div>
