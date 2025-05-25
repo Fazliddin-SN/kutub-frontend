@@ -50,18 +50,9 @@ export class RentalsListComponent implements OnInit {
 
       this.members.forEach((m) => this.userMap.set(m.user_id, m.username));
     });
+
     // error Handling
     this.rental.error$.subscribe((msg) => (this.errorMessage = msg));
-    // fetching retals data
-    this.rentalsService.fetchRentals().subscribe({
-      next: (res) => {
-        this.rentals = res.rentals.filter((r) => r.status !== "qaytarildi");
-        console.log(res.rentals);
-      },
-      error: (err) => {
-        this.errorMessage = err.error.error;
-      },
-    });
 
     this.tableData1 = {
       headerRow: [
@@ -74,6 +65,21 @@ export class RentalsListComponent implements OnInit {
         "Amallar",
       ],
     };
+
+    this.loadRentals();
+  }
+
+  loadRentals() {
+    // fetching retals data
+    this.rentalsService.fetchRentals().subscribe({
+      next: (res) => {
+        this.rentals = res.rentals.filter((r) => r.status !== "qaytarildi");
+        console.log(res.rentals);
+      },
+      error: (err) => {
+        this.errorMessage = err.error.error;
+      },
+    });
   }
 
   // getting user's username
@@ -84,7 +90,6 @@ export class RentalsListComponent implements OnInit {
   // book's name
   bookName(id: string) {
     // console.log("book Id", id);
-
     return this.bookMap.get(id) ?? "—";
   }
 
@@ -101,12 +106,12 @@ export class RentalsListComponent implements OnInit {
       if (result.isConfirmed) {
         this.rentalsService.updateRental(rentalId, bookId).subscribe({
           next: () => {
-            this.rentals = this.rentals.filter((r) => r.book_id !== bookId);
             Swal.fire(
               "Tasdiqlandi!",
               "Ijara tahrirlandi. Kitob qaytarildi!",
               "success"
             );
+            this.loadRentals();
           },
           error: (err) => {
             this.errorMessage = err.error.error;

@@ -47,16 +47,6 @@ export class BooksListComponent implements OnInit, AfterViewInit {
     this.needPagination = false;
     this.isPagesActive = false;
 
-    this.config.categories$.subscribe({
-      next: (cats) => {
-        // console.log("categories", cats);
-        this.categories = cats;
-      },
-      error: (err) => {
-        this.errorMessage = err.error.error;
-      },
-    });
-
     this.tableData1 = {
       headerRow: [
         "№/Jami",
@@ -71,6 +61,20 @@ export class BooksListComponent implements OnInit, AfterViewInit {
         "Amallar",
       ],
     };
+    this.loadCategories();
+    this.loadBooks();
+  }
+
+  loadCategories() {
+    this.config.categories$.subscribe({
+      next: (cats) => {
+        // console.log("categories", cats);
+        this.categories = cats;
+      },
+      error: (err) => {
+        this.errorMessage = err.error.error;
+      },
+    });
   }
 
   pagebyNum(ipage) {
@@ -180,6 +184,7 @@ export class BooksListComponent implements OnInit, AfterViewInit {
               "Kitob muvaffaqiyatli o‘chirildi.",
               "success"
             );
+            this.loadBooks();
           },
           error: (err) => {
             this.errorMessage = err.error.error;

@@ -33,7 +33,7 @@ export class NewMemberComponent implements OnInit {
     full_name: new FormControl(initialFormValue.full_name || "", {
       validators: [Validators.required, Validators.minLength(4)],
     }),
-    user_name: new FormControl(initialFormValue.user_name || "", {
+    username: new FormControl(initialFormValue.user_name || "", {
       validators: [Validators.required, Validators.minLength(3)],
     }),
     email: new FormControl(initialFormValue.email || "", {
@@ -45,7 +45,7 @@ export class NewMemberComponent implements OnInit {
     address: new FormControl(initialFormValue.address || "", {
       validators: [Validators.required],
     }),
-    phone_number: new FormControl(initialFormValue.phone_number || "", {
+    phonenumber: new FormControl(initialFormValue.phone_number || "", {
       validators: [Validators.required],
     }),
   });
@@ -60,12 +60,13 @@ export class NewMemberComponent implements OnInit {
             "libuser-form",
             JSON.stringify({
               full_name: value.full_name,
-              user_name: value.user_name,
+              user_name: value.username,
               email: value.email,
               address: value.address,
-              phone_number: value.phone_number,
+              phonenumber: value.phonenumber,
             })
           );
+          this.membersService.getMembers();
         },
       });
     //
@@ -92,6 +93,7 @@ export class NewMemberComponent implements OnInit {
             this.libUserForm.reset();
             localStorage.removeItem("libuser-form");
           });
+          this.membersService.getMembers();
         },
         error: (err) => {
           this.errorMessage = err.error.error;

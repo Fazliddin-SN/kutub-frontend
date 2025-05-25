@@ -4,5 +4,6 @@ export interface DecodedToken {
   email: string;
   full_name: string;
   role: "user" | "admin" | "owner";
+  botLink: string;
   exp: number;
 }

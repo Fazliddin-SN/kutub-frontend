@@ -135,6 +135,7 @@ export class NewBookComponent {
           this.router.navigate(["/owner-panel/library/books"]);
           this.bookForm.reset();
           window.localStorage.removeItem("book-register-form");
+          this.bookService.getBooks();
         });
       },
       error: (err) => {

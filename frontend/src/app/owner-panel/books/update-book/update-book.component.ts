@@ -41,21 +41,10 @@ export class UpdateBookComponent {
       image: [null, [Validators.required]],
       status: ["", [Validators.required]],
     });
-    // get Categories
-    this.globalConfService.categories$.subscribe({
-      next: (cats) => {
-        // console.log(cats);
-        this.categories = cats;
-      },
-      error: (err) => {
-        this.errorMessage = err.error.error;
-      },
-    });
-    // fectching book data from backend
 
     this.bookService.getBookById(this.bookId).subscribe({
       next: (res) => {
-        console.log("res book ", res.book);
+        // console.log("res book ", res.book);
 
         bookCategoryName = this.categories.find(
           (c) => c.category_id === res.book.category_id
@@ -70,6 +59,22 @@ export class UpdateBookComponent {
         this.errorMessage = err.error?.error || "Kitob topilmadi.";
       },
     });
+
+    this.loadCategories();
+  }
+
+  loadCategories() {
+    // get Categories
+    this.globalConfService.categories$.subscribe({
+      next: (cats) => {
+        // console.log(cats);
+        this.categories = cats;
+      },
+      error: (err) => {
+        this.errorMessage = err.error.error;
+      },
+    });
+    // fectching book data from backend
   }
   // get selected file as File type
   selectedFile: File | null = null;
@@ -109,6 +114,7 @@ export class UpdateBookComponent {
         Swal.fire("Success!", "Kitob tahrirlandi!", "success").then(() => {
           this.router.navigate(["owner-panel/library/books"]);
         });
+        this.bookService.getBooks();
       },
       error: (err) => {
         this.errorMessage = err.error?.error || "Xatolik tahrirlashda";

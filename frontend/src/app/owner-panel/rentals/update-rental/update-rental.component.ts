@@ -79,6 +79,7 @@ export class UpdateRentalComponent implements OnInit {
           due_date: rental.due_date.split("T")[0],
           return_date: rental.return_date.split("T")[0],
         });
+        this.rentalsService.fetchRentals();
       },
       error: (err) => {
         this.errorMessage = err.error.error;
@@ -112,6 +113,7 @@ export class UpdateRentalComponent implements OnInit {
             "success"
           ).then(() => {
             this.router.navigate(["/owner/library/rentals/list"]);
+            this.rentalsService.fetchRentals();
           });
         },
         error: (err) => {

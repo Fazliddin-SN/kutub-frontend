@@ -48,6 +48,8 @@ export class MembersListComponent implements OnInit, AfterViewInit {
         "Amallar",
       ],
     };
+
+    this.loadMembers();
   }
 
   pagebyNum(ipage) {
@@ -142,6 +144,7 @@ export class MembersListComponent implements OnInit, AfterViewInit {
               "Foydalanuvchi muaffaqiyatli o‘chirildi.",
               "success"
             );
+            this.loadMembers();
           },
           error: (err) => {
             this.errorMessage = err.error.error;

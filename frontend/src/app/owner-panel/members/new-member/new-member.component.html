@@ -69,27 +69,27 @@
                       matInput
                       type="text"
                       id="user_name"
-                      formControlName="user_name"
+                      formControlName="username"
                       placeholder="Username"
                     />
                   </mat-form-field>
                   <div
                     class="error-msg"
                     *ngIf="
-                      libUserForm.get('user_name')?.touched &&
-                      libUserForm.get('user_name')?.invalid
+                      libUserForm.get('username')?.touched &&
+                      libUserForm.get('username')?.invalid
                     "
                   >
                     <small
                       *ngIf="
-                        libUserForm.get('user_name')?.errors?.['required']
+                        libUserForm.get('username')?.errors?.['required']
                       "
                     >
                       Foydalanuvchi nomi talab qilinadi.
                     </small>
                     <small
                       *ngIf="
-                        libUserForm.get('user_name')?.errors?.['minlength']
+                        libUserForm.get('username')?.errors?.['minlength']
                       "
                     >
                       Kamida 3 harfdan iborat bo'lishi kerak.
@@ -220,20 +220,20 @@
                       matInput
                       type="tel"
                       id="phone_number"
-                      formControlName="phone_number"
+                      formControlName="phonenumber"
                       placeholder="+998955555555"
                     />
                   </mat-form-field>
                   <div
                     class="error-msg"
                     *ngIf="
-                      libUserForm.get('phone_number')?.touched &&
-                      libUserForm.get('phone_number')?.invalid
+                      libUserForm.get('phonenumber')?.touched &&
+                      libUserForm.get('phonenumber')?.invalid
                     "
                   >
                     <small
                       *ngIf="
-                        libUserForm.get('phone_number')?.errors?.['required']
+                        libUserForm.get('phonenumber')?.errors?.['required']
                       "
                     >
                       Telefon raqam talab qilinadi.

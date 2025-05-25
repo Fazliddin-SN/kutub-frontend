@@ -23,8 +23,8 @@ export class AuthService {
     return !!localStorage.getItem("token");
   }
   // login method
-  login(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/auth/login`, { email, password });
+  login(username: string, password: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/login`, { username, password });
   }
 
   //sign method for guests

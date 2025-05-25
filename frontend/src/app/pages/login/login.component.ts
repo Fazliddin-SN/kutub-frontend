@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 export class LoginComponent implements OnInit, OnDestroy {
   // form & state
   loginForm = new FormGroup({
-    email: new FormControl("", [Validators.required, Validators.email]),
+    username: new FormControl("", [Validators.required]),
     password: new FormControl("", [
       Validators.required,
       Validators.minLength(6),
@@ -45,9 +45,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     console.log(this.loginForm.value);
 
-    const { email, password } = this.loginForm.value;
+    const { username, password } = this.loginForm.value;
 
-    this.loginSub = this.authService.login(email, password).subscribe({
+    this.loginSub = this.authService.login(username, password).subscribe({
       next: (res) => {
         localStorage.setItem("token", res.token);
         localStorage.setItem("avatar", res.user.avatar);

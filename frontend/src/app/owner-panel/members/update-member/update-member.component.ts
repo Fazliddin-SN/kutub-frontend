@@ -33,9 +33,11 @@ export class UpdateMemberComponent implements OnInit {
       address: ["", [Validators.required]],
       phonenumber: ["", [Validators.required]],
     });
+    this.loadMemberById();
+  }
 
+  loadMemberById() {
     // fetching user data from backend to fill the form
-
     this.membersService.getuserById(this.userId).subscribe({
       next: (res) => {
         // console.log("user details", res.user);
@@ -67,11 +69,10 @@ export class UpdateMemberComponent implements OnInit {
             "success"
           ).then(() => {
             this.router.navigate(["/owner/library/members/list"]);
+            this.membersService.getMembers();
           });
         },
         error: (err) => {
-          console.log("update error", err);
-
           this.errorMessage = err.error.error;
         },
       });

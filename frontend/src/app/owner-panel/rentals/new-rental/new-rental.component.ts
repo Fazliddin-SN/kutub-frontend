@@ -8,6 +8,8 @@ import { Book } from "src/interfaces/book.model";
 import { LibraryUser } from "src/interfaces/libraryuser.model";
 import Swal from "sweetalert2";
 import { rentalService } from "../rental.sevice";
+import { LibraryUserService } from "src/app/services/library-user.service";
+import { BookService } from "src/app/services/book.service";
 
 ///
 let initialFormValue: any = {};
@@ -30,7 +32,13 @@ export class NewRentalComponent implements OnInit {
   private rentalsService = inject(RentalsService);
   private router = inject(Router);
 
-  constructor(private rental: rentalService) {}
+  constructor(
+    private rental: rentalService,
+    private memberService: LibraryUserService,
+    private booksService: BookService
+  ) {
+    this.loadMemebersandBooks();
+  }
   //
   members: LibraryUser[] = [];
   books: Book[] = [];
@@ -58,7 +66,6 @@ export class NewRentalComponent implements OnInit {
 
   ngOnInit(): void {
     // storing the input data in localStorage for some time.
-
     this.rentalForm.valueChanges.pipe(debounceTime(500)).subscribe({
       next: (value) => {
         window.localStorage.setItem(
@@ -73,16 +80,39 @@ export class NewRentalComponent implements OnInit {
         );
       },
     });
-    this.rental.books$.subscribe((books) => {
-      this.books = books.filter((b) => b.status !== "ijarada");
-    });
-    this.rental.members$.subscribe((m) => (this.members = m));
+    this.loadMemebersandBooks();
+
     this.rental.error$.subscribe((msg) => (this.errorMessage = msg));
   }
 
   isOverDue(dueDate: string) {
     return new Date(dueDate) < new Date();
   }
+
+  loadMemebersandBooks() {
+    this.booksService.getBooks().subscribe({
+      next: (res) => {
+        this.books = res.books.filter((book) => book.status !== "ijarada");
+      },
+      error: (err) => {
+        this.errorMessage = err.error.error;
+      },
+    });
+
+    this.memberService.getMembers().subscribe({
+      next: (res) => {
+        this.members = res.members;
+      },
+      error: (err) => {
+        this.errorMessage = err.error.error;
+      },
+    });
+  }
+
+  // this.rental.books$.subscribe((books) => {
+  //   this.books = books.filter((b) => b.status !== "ijarada");
+  // });
+  // this.rental.members$.subscribe((m) => (this.members = m));
 
   // sending data to backend
   onSubmit() {
@@ -98,9 +128,11 @@ export class NewRentalComponent implements OnInit {
           text: "Yangi Ijara Yaratildi!",
         }).then(() => {
           this.router.navigate(["/owner/library/rentals/list"]);
-          this.rentalForm.reset();
-          window.localStorage.removeItem("rental-form");
         });
+        localStorage.removeItem("rental-form");
+        this.booksService.getBooks();
+        this.memberService.getMembers();
+        this.loadMemebersandBooks();
       },
       error: (err) => {
         this.errorMessage = err.error.error;
