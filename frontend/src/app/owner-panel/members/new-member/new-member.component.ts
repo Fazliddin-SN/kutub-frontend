@@ -101,6 +101,36 @@ export class NewMemberComponent implements OnInit {
       });
   }
 
+  addMemberWithUsername() {
+    Swal.fire({
+      title: `Yangi azo qo'shish foydalanuvchi nomi orqali.`,
+      allowEnterKey: true,
+      input: "text",
+      inputPlaceholder: "Foydalanuvchi nomi...",
+      confirmButtonText: "Qo'shish",
+      showCancelButton: true,
+      cancelButtonText: "Bekor Qilish",
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+
+      preConfirm: (value) => {
+        this.membersService.registerWithUsername(value).subscribe({
+          next: (res) => {
+            Swal.fire("Muvaffaqiyat", "Yangi a'zo qo'shildi!", "success");
+            this.router.navigate(["/owner/library/members/list"]);
+            this.membersService.getMembers();
+          },
+          error: (err) => {
+            this.errorMessage = err.error.error;
+          },
+        });
+      },
+    });
+  }
+
   // password showing feature
   password: string = "";
   showPassword: boolean = false;

@@ -38,7 +38,7 @@ export class UpdateBookComponent {
       isbn: ["", [Validators.required]],
       publication_date: ["", [Validators.required]],
       category: [bookCategoryName, [Validators.required]],
-      image: [null, [Validators.required]],
+      image: [null, []],
       status: ["", [Validators.required]],
     });
 
@@ -53,6 +53,7 @@ export class UpdateBookComponent {
           ...res.book,
           image: res.book.image_path,
           category: bookCategoryName,
+          publication_date: res.book.publication_date.split("T")[0],
         });
       },
       error: (err) => {
@@ -111,6 +112,7 @@ export class UpdateBookComponent {
     }
     this.bookService.updateBook(this.bookId, fd).subscribe({
       next: () => {
+        Swal.showLoading();
         Swal.fire("Success!", "Kitob tahrirlandi!", "success").then(() => {
           this.router.navigate(["owner-panel/library/books"]);
         });

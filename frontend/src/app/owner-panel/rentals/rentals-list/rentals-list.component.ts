@@ -97,7 +97,7 @@ export class RentalsListComponent implements OnInit {
   delete(rentalId: string, bookId: string) {
     Swal.fire({
       icon: "question",
-      title: "Ichonchingic komilmi?",
+      title: "Ichonchingiz komilmi?",
       text: "Rostan ham bu kitob qayarildimi?",
       showCancelButton: true,
       confirmButtonText: "Ha, qaytarildi",

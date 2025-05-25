@@ -118,9 +118,6 @@ export class UserRegistrationComponent {
           // console.log('error ', err);
           this.errorMessage = err.error?.error;
         },
-        complete: () => {
-          this.registerForm.reset();
-        },
       });
   }
 

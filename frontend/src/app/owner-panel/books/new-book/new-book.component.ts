@@ -54,9 +54,7 @@ export class NewBookComponent {
     status: new FormControl(initialFormValue.status || "", {
       validators: [Validators.required],
     }),
-    image: new FormControl(null, {
-      validators: [Validators.required],
-    }),
+    image: new FormControl(null, {}),
   });
 
   ngOnInit(): void {

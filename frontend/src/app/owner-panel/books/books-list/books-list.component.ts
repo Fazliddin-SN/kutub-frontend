@@ -162,7 +162,9 @@ export class BooksListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    return this.loadBooks();
+    this.loadBooks();
+    this.loadCategories();
+    return;
   }
 
   // this navigates to delete component

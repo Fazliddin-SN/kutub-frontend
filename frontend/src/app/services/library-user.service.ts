@@ -30,6 +30,17 @@ export class LibraryUserService {
     });
   }
 
+  // registering new library user
+  registerWithUsername(username: string): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}/library/member?username=${username}`,
+      {},
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
   // fetching members details
   getMembers(currentPage: number = 0): Observable<any> {
     // console.log("current page", currentPage);
