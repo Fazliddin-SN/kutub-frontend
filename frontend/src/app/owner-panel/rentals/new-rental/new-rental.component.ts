@@ -92,6 +92,8 @@ export class NewRentalComponent implements OnInit {
   loadMemebersandBooks() {
     this.booksService.getBooks().subscribe({
       next: (res) => {
+        console.log("books ", this.books);
+
         this.books = res.books.filter((book) => book.status !== "ijarada");
       },
       error: (err) => {

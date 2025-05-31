@@ -25,7 +25,7 @@ export class BookService {
   // fetching all books that belong to a specific library
   getBooks(currentPage: number = 0): Observable<any> {
     return this.http.get<any>(
-      `${this.baseUrl}/library/books?page=` + currentPage + "&size=10",
+      `${this.baseUrl}/library/books?page=` + currentPage + "&size=50",
       {
         headers: this.headers,
       }
@@ -36,7 +36,7 @@ export class BookService {
     return this.http.get<any>(
       `${this.baseUrl}/library/books?page=` +
         currentPage +
-        "&size=10" +
+        "&size=50" +
         filterLink,
       { headers: this.headers }
     );

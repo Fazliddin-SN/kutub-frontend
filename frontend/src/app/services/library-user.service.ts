@@ -46,7 +46,7 @@ export class LibraryUserService {
     // console.log("current page", currentPage);
 
     return this.http.get<any>(
-      `${this.baseUrl}/library/members?page=` + currentPage + `&size=15`,
+      `${this.baseUrl}/library/members?page=` + currentPage + `&size=50`,
       { headers: this.headers }
     );
   }
@@ -58,7 +58,7 @@ export class LibraryUserService {
     return this.http.get<any>(
       `${this.baseUrl}/library/members?page=` +
         currentPage +
-        `&size=2` +
+        `&size=50` +
         filterLink,
       { headers: this.headers }
     );

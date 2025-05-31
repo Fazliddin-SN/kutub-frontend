@@ -131,8 +131,8 @@ export class NewBookComponent {
           text: "Yangi Kitob qo'shildi!",
         }).then(() => {
           this.router.navigate(["/owner-panel/library/books"]);
-          this.bookForm.reset();
           window.localStorage.removeItem("book-register-form");
+
           this.bookService.getBooks();
         });
       },
