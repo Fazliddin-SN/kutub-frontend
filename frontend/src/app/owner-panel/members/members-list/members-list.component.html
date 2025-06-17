@@ -141,11 +141,11 @@
                   <tbody>
                     <tr *ngFor="let row of members; let i = index">
                       <td class="text-center">{{ i + 1 }}</td>
-                      <td>{{ row.full_name }}</td>
-                      <td>{{ row.username }}</td>
-                      <td>{{ row.email }}</td>
-                      <td>{{ row.address }}</td>
-                      <td>{{ row.phonenumber }}</td>
+                      <td>{{ row.member.fullname }}</td>
+                      <td>{{ row.member.username }}</td>
+                      <td>{{ row.member.email }}</td>
+                      <td>{{ row.member.address }}</td>
+                      <td>{{ row.member.phonenumber }}</td>
                       <td class="td-actions text-right">
                         <button
                           mat-raised-button

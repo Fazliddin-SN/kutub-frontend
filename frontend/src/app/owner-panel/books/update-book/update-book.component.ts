@@ -1,12 +1,17 @@
 import { Component, inject } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { GlobalConfigService } from "src/app/global-config.service";
 import { BookService } from "src/app/services/book.service";
 import { Category } from "src/interfaces/category.model";
 import Swal from "sweetalert2";
 
-let bookCategoryName: string | undefined = "";
+let bookCategoryId: string | undefined = "";
 @Component({
   selector: "app-update-book",
   templateUrl: "./update-book.component.html",
@@ -17,13 +22,13 @@ export class UpdateBookComponent {
   private bookService = inject(BookService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
-  private globalConfService = inject(GlobalConfigService);
+  private config = inject(GlobalConfigService);
 
   categories: Category[] = [];
   bookId!: string;
   errorMessage: string = "";
   // status values
-  statusList: string[] = ["mavjud", "ijarada"];
+  statusList: any[] = [];
   form!: FormGroup;
 
   //
@@ -37,23 +42,15 @@ export class UpdateBookComponent {
       author: ["", [Validators.required]],
       isbn: ["", [Validators.required]],
       publication_date: ["", [Validators.required]],
-      category: [bookCategoryName, [Validators.required]],
-      image: [null, []],
-      status: ["", [Validators.required]],
+      category_id: ["", [Validators.required]],
+      status_id: ["", [Validators.required]],
+      image: new FormControl(null, {}),
     });
 
     this.bookService.getBookById(this.bookId).subscribe({
       next: (res) => {
-        // console.log("res book ", res.book);
-
-        bookCategoryName = this.categories.find(
-          (c) => c.category_id === res.book.category_id
-        )?.category_name;
         this.form.patchValue({
           ...res.book,
-          image: res.book.image_path,
-          category: bookCategoryName,
-          publication_date: res.book.publication_date.split("T")[0],
         });
       },
       error: (err) => {
@@ -61,29 +58,49 @@ export class UpdateBookComponent {
       },
     });
 
-    this.loadCategories();
+    this.fetchCategories();
+    this.fetchBookStatuses();
   }
 
-  loadCategories() {
-    // get Categories
-    this.globalConfService.categories$.subscribe({
-      next: (cats) => {
+  // get Categories
+  fetchCategories() {
+    this.config.loadCategories().subscribe({
+      next: (res) => {
         // console.log(cats);
-        this.categories = cats;
+        this.categories = res.categories;
       },
       error: (err) => {
         this.errorMessage = err.error.error;
       },
     });
-    // fectching book data from backend
   }
+
+  // get Categories
+  fetchBookStatuses() {
+    this.config.getBookStatuses().subscribe({
+      next: (res) => {
+        // console.log(cats);
+        this.statusList = res.bookStatuses;
+      },
+      error: (err) => {
+        this.errorMessage = err.error.error;
+      },
+    });
+  }
+
   // get selected file as File type
   selectedFile: File | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
 
   onFileSelected(event: any) {
     const input = event.target as HTMLInputElement;
+
     if (input.files && input.files.length) {
       this.selectedFile = input.files[0];
+      //preview
+      const reader = new FileReader();
+      reader.onload = () => (this.imagePreview = reader.result);
+      reader.readAsDataURL(this.selectedFile);
     }
   }
   //
@@ -97,14 +114,15 @@ export class UpdateBookComponent {
     // append all your text fields in one go
 
     // 2) Append text fields from the form
-    const { title, author, isbn, publication_date, category, status } =
+    const { title, author, isbn, publication_date, category_id, status_id } =
       this.form.value;
+
     fd.append("title", title);
     fd.append("author", author);
     fd.append("isbn", isbn);
     fd.append("publication_date", publication_date);
-    fd.append("category", category);
-    fd.append("status", status);
+    fd.append("category_id", category_id);
+    fd.append("status_id", status_id);
 
     if (this.selectedFile) {
       // the first argument must match your server’s upload.single('…') field name

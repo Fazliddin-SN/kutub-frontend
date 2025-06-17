@@ -67,7 +67,7 @@ export class MembersListComponent implements OnInit, AfterViewInit {
         this.members = res.members;
         this.currentPage = res.currentPage;
         this.totalPages = res.totalPages;
-        // console.log("members ", this.members);
+        console.log("members ", this.members);
         // console.log("total pages ", this.totalPages);
         // console.log("current page ", this.currentPage);
 

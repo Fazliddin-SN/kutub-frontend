@@ -25,7 +25,7 @@ export class BookService {
   // fetching all books that belong to a specific library
   getBooks(currentPage: number = 0): Observable<any> {
     return this.http.get<any>(
-      `${this.baseUrl}/library/books?page=` + currentPage + "&size=50",
+      `${this.baseUrl}/books?page=` + currentPage + "&size=50",
       {
         headers: this.headers,
       }
@@ -34,16 +34,13 @@ export class BookService {
   // getting books by filter (category, title and isbn)
   getBooksWithFilter(currentPage: number, filterLink: string): Observable<any> {
     return this.http.get<any>(
-      `${this.baseUrl}/library/books?page=` +
-        currentPage +
-        "&size=50" +
-        filterLink,
+      `${this.baseUrl}/books?page=` + currentPage + "&size=50" + filterLink,
       { headers: this.headers }
     );
   }
   // create book
   addNewBook(bookData: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/books/add`, bookData, {
+    return this.http.post<any>(`${this.baseUrl}/books`, bookData, {
       headers: this.headers,
     });
   }
@@ -62,9 +59,7 @@ export class BookService {
 
   // update book
   updateBook(bookId: string, bookData: any): Observable<any> {
-    console.log("book data", bookData);
-
-    return this.http.put(`${this.baseUrl}/books/update/${bookId}`, bookData, {
+    return this.http.put(`${this.baseUrl}/books/${bookId}/edit`, bookData, {
       headers: this.headers,
     });
   }

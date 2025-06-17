@@ -28,7 +28,8 @@ export class BooksListComponent implements OnInit, AfterViewInit {
   private router = inject(Router);
   private authService = inject(AuthService);
   //
-  categories: Category[] = [];
+  categories: any[] = [];
+
   books: Book[] = [];
   tableData1: TableData;
   errorMessage: string = "";
@@ -40,7 +41,7 @@ export class BooksListComponent implements OnInit, AfterViewInit {
   mypages = [];
   isPagesActive: boolean;
   // status needed for filter
-  statusList: string[] = ["mavjud", "ijarada"];
+  statusList: any[] = [];
   ngOnInit(): void {
     // pagination
     this.currentPage = 0;
@@ -61,15 +62,31 @@ export class BooksListComponent implements OnInit, AfterViewInit {
         "Amallar",
       ],
     };
-    this.loadCategories();
+
     this.loadBooks();
+    this.fetchBookStatuses();
+    this.fetchCategories();
   }
 
-  loadCategories() {
-    this.config.categories$.subscribe({
-      next: (cats) => {
-        // console.log("categories", cats);
-        this.categories = cats;
+  // get Categories
+  fetchCategories() {
+    this.config.loadCategories().subscribe({
+      next: (res) => {
+        // console.log(cats);
+        this.categories = res.categories;
+      },
+      error: (err) => {
+        this.errorMessage = err.error.error;
+      },
+    });
+  }
+
+  // get Categories
+  fetchBookStatuses() {
+    this.config.getBookStatuses().subscribe({
+      next: (res) => {
+        // console.log(cats);
+        this.statusList = res.bookStatuses;
       },
       error: (err) => {
         this.errorMessage = err.error.error;
@@ -90,6 +107,8 @@ export class BooksListComponent implements OnInit, AfterViewInit {
     this.bookService.getBooks(this.currentPage).subscribe({
       next: (res) => {
         this.books = res.books;
+        console.log("books ", this.books);
+
         this.currentPage = res.currentPage;
         this.totalPages = res.totalPages;
 
@@ -109,21 +128,20 @@ export class BooksListComponent implements OnInit, AfterViewInit {
   }
 
   getListOfBooksWIthFilter(
-    categoryId: string,
+    category_id: string,
     bookTitle: string,
     isbn: string,
     status: string
   ) {
     let filterLink =
-      "&categoryId=" +
-      categoryId +
+      "&category_id=" +
+      category_id +
       "&bookTitle=" +
       bookTitle +
       "&isbn=" +
       isbn +
-      "&status=" +
+      "&status_id=" +
       status;
-    // console.log("status ", status);
 
     this.bookService
       .getBooksWithFilter(this.currentPage, filterLink)
@@ -150,20 +168,10 @@ export class BooksListComponent implements OnInit, AfterViewInit {
   }
   ngOnDestroy(): void {}
   // get category name
-  getCategoryName(cat_id: string) {
-    // console.log(cat_id);
-    let catname: string | undefined = "";
-    catname = this.categories.find(
-      (c) => c.category_id === cat_id
-    )?.category_name;
-    // console.log(catname);
-
-    return catname;
-  }
 
   ngAfterViewInit(): void {
     this.loadBooks();
-    this.loadCategories();
+
     return;
   }
 

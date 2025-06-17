@@ -249,15 +249,15 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.userAvatar = localStorage.getItem("avatar");
-    if (this.userRole === "admin") {
+    if (this.userRole === "1") {
       this.menuItems = adminROUTES.filter((menuItem) => menuItem);
-    } else if (this.userRole === "owner") {
+    } else if (this.userRole === "2") {
       this.menuItems = ownerROUTES.filter((menuItem) => menuItem);
-    } else if (this.userRole === "user") {
+    } else if (this.userRole === "3") {
       this.menuItems = userROUTES.filter((menuItem) => menuItem);
     } else {
     }
-    this.fullName = localStorage.getItem("full_name");
+    this.fullName = localStorage.getItem("fullname");
 
     if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
       const elemSidebar = <HTMLElement>(

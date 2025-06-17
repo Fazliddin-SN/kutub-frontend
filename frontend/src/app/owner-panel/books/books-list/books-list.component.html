@@ -11,7 +11,7 @@
             </div>
             <h4 class="card-title">Kitoblar Ro'yxati</h4>
           </div>
-          
+
           <div class="card-body">
             <div class="material-datatables">
               <div class="row">
@@ -27,12 +27,10 @@
                       >
                       <mat-option
                         *ngFor="let cat of categories"
-                        [value]="cat.category_id"
-                        (click)="
-                          getListOfBooksWIthFilter(cat.category_id, '', '', '')
-                        "
+                        [value]="cat.id"
+                        (click)="getListOfBooksWIthFilter(cat.id, '', '', '')"
                       >
-                        {{ cat.category_name }}
+                        {{ cat.name }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -87,10 +85,12 @@
                       >
                       <mat-option
                         *ngFor="let status of statusList"
-                        [value]="status"
-                        (click)="getListOfBooksWIthFilter('', '', '', status)"
+                        [value]="status.id"
+                        (click)="
+                          getListOfBooksWIthFilter('', '', '', status.id)
+                        "
                       >
-                        {{ status }}
+                        {{ status.status_name }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -174,7 +174,7 @@
                         <div class="img-container" class="cover-img-container">
                           <img
                             class="cover-img"
-                            [src]="row.image_path"
+                            [src]="row.imageData"
                             alt="Kitob rasmi"
                           />
                         </div>
@@ -182,16 +182,16 @@
                       <td class="title">{{ row.title }}</td>
                       <td>{{ row.author }}</td>
                       <td>{{ row.isbn }}</td>
-                      <td>{{ getCategoryName(row.category_id) }}</td>
+                      <td>{{ row.category.name }}</td>
                       <td>{{ row.publication_date | date }}</td>
-                      <td>{{ row.status }}</td>
+                      <td>{{ row.status.status_name }}</td>
                       <td>{{ row.read_count }}</td>
                       <td class="td-actions text-right">
                         <button
                           mat-raised-button
                           type="button"
                           class="btn btn-success"
-                          (click)="edit(row.book_id)"
+                          (click)="edit(row.id)"
                         >
                           <i class="material-icons">edit</i>
                         </button>
@@ -199,7 +199,7 @@
                           mat-raised-button
                           type="button"
                           class="btn btn-danger"
-                          (click)="delete(row.book_id)"
+                          (click)="delete(row.id)"
                         >
                           <i class="material-icons">delete</i>
                         </button>

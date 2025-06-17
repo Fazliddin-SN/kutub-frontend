@@ -46,7 +46,7 @@ export class LibraryUserService {
     // console.log("current page", currentPage);
 
     return this.http.get<any>(
-      `${this.baseUrl}/library/members?page=` + currentPage + `&size=50`,
+      `${this.baseUrl}/library/members/info?page=` + currentPage + `&size=50`,
       { headers: this.headers }
     );
   }
@@ -56,7 +56,7 @@ export class LibraryUserService {
     filterLink: string
   ): Observable<any> {
     return this.http.get<any>(
-      `${this.baseUrl}/library/members?page=` +
+      `${this.baseUrl}/library/members/info?page=` +
         currentPage +
         `&size=50` +
         filterLink,

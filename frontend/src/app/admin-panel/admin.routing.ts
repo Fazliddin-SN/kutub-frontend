@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { AuthGuardService } from "../services/auth.guard.service";
-import { RoleGuardService } from "../services/role.guard.service";
+
 import { UserRegistrationComponent } from "./user-registration/user-registration.component";
 import { LibraryOwnerComponent } from "./library-register/library-owner.component";
 import { EditProfileComponent } from "../pages/edit-profile/edit-profile.component";
@@ -8,7 +8,7 @@ import { EditProfileComponent } from "../pages/edit-profile/edit-profile.compone
 export const adminRoutes: Routes = [
   {
     path: "",
-    canActivate: [AuthGuardService, RoleGuardService],
+    canActivate: [AuthGuardService],
     data: { roles: ["admin"] },
     children: [
       {

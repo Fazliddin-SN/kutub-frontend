@@ -26,11 +26,12 @@ export class NewBookComponent {
   private bookService = inject(BookService);
   private router = inject(Router);
 
-  private globalConfService = inject(GlobalConfigService);
+  constructor(private config: GlobalConfigService) {}
   // storing error message
   errorMessage: string = "";
   // categories stored here;
   categories: Category[] = [];
+  bookStatuses: any[] = [];
   // status values
   statusList: string[] = ["mavjud", "ijarada"];
 
@@ -48,39 +49,41 @@ export class NewBookComponent {
     publication_date: new FormControl(initialFormValue.publication_date || "", {
       validators: [Validators.required],
     }),
-    category: new FormControl(initialFormValue.category || "", {
+    category_id: new FormControl(initialFormValue.category_id || "", {
       validators: [Validators.required],
     }),
-    status: new FormControl(initialFormValue.status || "", {
+    status_id: new FormControl(initialFormValue.status_id || "", {
       validators: [Validators.required],
     }),
     image: new FormControl(null, {}),
   });
 
   ngOnInit(): void {
-    const subscription = this.bookForm.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe({
-        next: (value) => {
-          window.localStorage.setItem(
-            "book-register-form",
-            JSON.stringify({
-              title: value.title,
-              author: value.author,
-              isbn: value.isbn,
-              publication_date: value.publication_date,
-              category: value.category,
-              status: value.status,
-            })
-          );
-        },
-      });
+    this.bookForm.valueChanges.pipe(debounceTime(500)).subscribe({
+      next: (value) => {
+        window.localStorage.setItem(
+          "book-register-form",
+          JSON.stringify({
+            title: value.title,
+            author: value.author,
+            isbn: value.isbn,
+            publication_date: value.publication_date,
+            category: value.category_id,
+            status: value.status_id,
+          })
+        );
+      },
+    });
+    this.fetchCategories();
+    this.fetchBookStatuses();
+  }
 
-    // get Categories
-    const subscription2 = this.globalConfService.categories$.subscribe({
-      next: (cats) => {
+  // get Categories
+  fetchCategories() {
+    this.config.loadCategories().subscribe({
+      next: (res) => {
         // console.log(cats);
-        this.categories = cats;
+        this.categories = res.categories;
       },
       error: (err) => {
         this.errorMessage = err.error.error;
@@ -90,8 +93,26 @@ export class NewBookComponent {
       },
     });
   }
+
+  // get Categories
+  fetchBookStatuses() {
+    this.config.getBookStatuses().subscribe({
+      next: (res) => {
+        // console.log(cats);
+        this.bookStatuses = res.bookStatuses;
+      },
+      error: (err) => {
+        this.errorMessage = err.error.error;
+      },
+      complete: () => {
+        this.bookForm.reset();
+      },
+    });
+  }
+
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
+
   onFileSelected(event: any) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length) {

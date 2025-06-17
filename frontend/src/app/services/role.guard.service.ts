@@ -5,21 +5,18 @@ import { AuthService } from "./auth-service";
 @Injectable({
   providedIn: "root",
 })
-export class RoleGuardService implements CanActivate {
+export class OwnerGuardService implements CanActivate {
   private authService = inject(AuthService);
   private router = inject(Router);
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    const expectedRoles: string[] = route.data["roles"];
-    // console.log('expectedRoles ', expectedRoles);
-    const userRole = this.authService.getUserRole();
-    // console.log('user role ', userRole);
+    let isOwner = localStorage.getItem("roleId");
 
-    if (userRole && expectedRoles.includes(userRole || "")) {
+    if (isOwner === "2") {
       return true;
+    } else {
+      this.router.navigate(["/dashboard"]);
+      return false;
     }
-
-    this.router.navigate(["/"]);
-    return false;
   }
 }

@@ -97,22 +97,6 @@ export class AuthService {
     return localStorage.getItem("token");
   }
 
-  // getting user role from decoded token
-  getUserRole(): "user" | "admin" | "owner" | null {
-    const token = this.getToken();
-    if (!token) {
-      return null;
-    }
-
-    try {
-      const decoded = jwtDecode<DecodedToken>(token);
-      // console.log(decoded.role);
-      return decoded.role;
-    } catch (error) {
-      return null;
-    }
-  }
-
   // check if user logs in
   isLoggedIn(): boolean {
     if (this.getToken()) {
@@ -125,7 +109,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem("token");
     localStorage.removeItem("full_name");
-    localStorage.removeItem("role");
+    localStorage.removeItem("roleId");
     localStorage.removeItem("user_email");
     localStorage.removeItem("userId");
     localStorage.removeItem("avatar");
@@ -139,7 +123,7 @@ export class AuthService {
       return null;
     }
     try {
-      return jwtDecode<DecodedToken>(token);
+      return jwtDecode<any>(token);
     } catch (error) {
       console.error("Failed to decode JWT", error);
       return null;
@@ -150,13 +134,13 @@ export class AuthService {
   setUserDetails() {
     const decoded = this.getDecodedToken();
     const userId = decoded.id;
-    const full_name = decoded.full_name;
-    const role = decoded.role;
+    const fullname = decoded.fullname;
+    const role_id = decoded.role_id;
     const user_email = decoded.email;
 
     //
-    localStorage.setItem("full_name", full_name);
-    localStorage.setItem("role", role);
+    localStorage.setItem("fullname", fullname);
+    localStorage.setItem("roleId", role_id);
     localStorage.setItem("userId", userId);
     localStorage.setItem("user_email", user_email);
   }

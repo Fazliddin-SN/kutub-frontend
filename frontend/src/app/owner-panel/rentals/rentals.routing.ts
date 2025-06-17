@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { AuthGuardService } from "src/app/services/auth.guard.service";
-import { RoleGuardService } from "src/app/services/role.guard.service";
+
 import { RentalsListComponent } from "./rentals-list/rentals-list.component";
 import { NewRentalComponent } from "./new-rental/new-rental.component";
 import { UpdateRentalComponent } from "./update-rental/update-rental.component";
@@ -10,7 +10,7 @@ import { RentalRequestsComponent } from "./rental-requests/rental-requests.compo
 export const rentalsRoute: Routes = [
   {
     path: "library/rentals",
-    canActivate: [AuthGuardService, RoleGuardService],
+    canActivate: [AuthGuardService],
     data: { roles: ["owner"] },
     children: [
       {
