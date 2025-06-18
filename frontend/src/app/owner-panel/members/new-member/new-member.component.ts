@@ -30,7 +30,7 @@ export class NewMemberComponent implements OnInit {
 
   // library-user register form
   libUserForm = new FormGroup({
-    full_name: new FormControl(initialFormValue.full_name || "", {
+    fullname: new FormControl(initialFormValue.full_name || "", {
       validators: [Validators.required, Validators.minLength(4)],
     }),
     username: new FormControl(initialFormValue.user_name || "", {
@@ -59,7 +59,7 @@ export class NewMemberComponent implements OnInit {
           window.localStorage.setItem(
             "libuser-form",
             JSON.stringify({
-              full_name: value.full_name,
+              full_name: value.fullname,
               user_name: value.username,
               email: value.email,
               address: value.address,

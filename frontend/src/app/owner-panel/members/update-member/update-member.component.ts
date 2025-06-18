@@ -26,7 +26,7 @@ export class UpdateMemberComponent implements OnInit {
     });
     // library-user register form
     this.libUserForm = this.fb.group({
-      full_name: ["", [Validators.required]],
+      fullname: ["", [Validators.required]],
       username: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required]],
@@ -40,8 +40,14 @@ export class UpdateMemberComponent implements OnInit {
     // fetching user data from backend to fill the form
     this.membersService.getuserById(this.userId).subscribe({
       next: (res) => {
-        // console.log("user details", res.user);
-        this.libUserForm.patchValue(res.user);
+        console.log("user details", res);
+        this.libUserForm.patchValue({
+          fullname: res.member.member.fullname,
+          username: res.member.member.username,
+          email: res.member.member.email,
+          address: res.member.member.address,
+          phonenumber: res.member.member.phonenumber,
+        });
       },
       error: (err) => {
         this.errorMessage = err.error;

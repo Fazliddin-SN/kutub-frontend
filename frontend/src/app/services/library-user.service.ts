@@ -73,8 +73,6 @@ export class LibraryUserService {
 
   // get  library member by id
   getuserById(userId: string): Observable<any> {
-    console.log("userId ", userId);
-
     return this.http.get(`${this.baseUrl}/library/members/${userId}`, {
       headers: this.headers,
     });
@@ -88,7 +86,7 @@ export class LibraryUserService {
     // const { user_name, full_name, address, email, password, phone_number } =
     //   userData;
     return this.http.put(
-      `${this.baseUrl}/library/members/${userId}/edit`,
+      `${this.baseUrl}/library/members/${userId}`,
       { ...userData, user_name: userData.user_name },
       {
         headers: this.headers,

@@ -86,7 +86,7 @@ export class MembersListComponent implements OnInit, AfterViewInit {
   }
 
   // getting list of members with filter
-  getListOfMemsWithFilter(username: any, email: any, phone_number: any) {
+  getListOfMemsWithFilter(username: any, email: any, phonenumber: any) {
     // console.log("phone num ", phone_number);
     // console.log("email ", email);
     // console.log("user name ", username);
@@ -96,8 +96,8 @@ export class MembersListComponent implements OnInit, AfterViewInit {
       username +
       "&email=" +
       email +
-      "&phone_number=" +
-      phone_number;
+      "&phonenumber=" +
+      phonenumber;
 
     this.memberService
       .getMembersWithFilter(this.currentPage, filterLink)
