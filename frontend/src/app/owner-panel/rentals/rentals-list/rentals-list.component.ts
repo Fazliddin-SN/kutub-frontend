@@ -35,25 +35,6 @@ export class RentalsListComponent implements OnInit {
   // methods
 
   ngOnInit(): void {
-    // Books fetching
-    this.rental.books$.subscribe((b) => {
-      this.books = b;
-      this.bookMap.clear();
-      this.books.forEach((b) => this.bookMap.set(b.book_id, b.title));
-    });
-    // members fecthing
-    this.rental.members$.subscribe((m) => {
-      // console.log("members list ", m);
-
-      this.members = m;
-      this.userMap.clear();
-
-      this.members.forEach((m) => this.userMap.set(m.user_id, m.username));
-    });
-
-    // error Handling
-    this.rental.error$.subscribe((msg) => (this.errorMessage = msg));
-
     this.tableData1 = {
       headerRow: [
         "№/Jami",
@@ -73,8 +54,8 @@ export class RentalsListComponent implements OnInit {
     // fetching retals data
     this.rentalsService.fetchRentals().subscribe({
       next: (res) => {
-        this.rentals = res.rentals.filter((r) => r.status !== "qaytarildi");
-        console.log(res.rentals);
+        this.rentals = res.rentals.filter((r) => r.status_id !== 2);
+        // console.log(res.rentals);
       },
       error: (err) => {
         this.errorMessage = err.error.error;
@@ -117,7 +98,7 @@ export class RentalsListComponent implements OnInit {
             this.errorMessage = err.error.error;
             Swal.fire(
               "Xatolik",
-              "Kitobni o'chirishda maummo yuz berdi",
+              "Ijarani tahrirlashda xatolik yuz berdi. " + err.error.error,
               "error"
             );
           },
@@ -131,6 +112,8 @@ export class RentalsListComponent implements OnInit {
 
   // editing navigates to update rental component
   edit(rentalId: string) {
-    this.router.navigate(["/owner/library/rentals", rentalId, "edit"]);
+    this.router.navigate(["/owner/library/rentals", rentalId, "edit"], {
+      relativeTo: this.route,
+    });
   }
 }

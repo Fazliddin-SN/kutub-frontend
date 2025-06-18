@@ -6,11 +6,12 @@ import { NewRentalComponent } from "./new-rental/new-rental.component";
 import { UpdateRentalComponent } from "./update-rental/update-rental.component";
 import { RentalsHistoryComponent } from "./rentals-history/rentals-history.component";
 import { RentalRequestsComponent } from "./rental-requests/rental-requests.component";
+import { OwnerGuardService } from "src/app/services/role.guard.service";
 
 export const rentalsRoute: Routes = [
   {
     path: "library/rentals",
-    canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService, OwnerGuardService],
     data: { roles: ["owner"] },
     children: [
       {
@@ -23,7 +24,7 @@ export const rentalsRoute: Routes = [
       },
       {
         path: ":rentalId/edit",
-        component: UpdateRentalComponent,
+        component: NewRentalComponent,
       },
       {
         path: "history",

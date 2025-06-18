@@ -164,7 +164,6 @@ export class MembersListComponent implements OnInit, AfterViewInit {
 
   // editing member data
   edit(userId: string) {
-    console.log(userId);
     this.router.navigate(["/owner/library/members", userId, "edit"], {
       relativeTo: this.route,
     });

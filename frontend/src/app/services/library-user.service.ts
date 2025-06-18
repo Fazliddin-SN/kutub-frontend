@@ -54,8 +54,20 @@ export class LibraryUserService {
   getMembersWithFilter(
     currentPage: number,
     filterLink: string
-  ): Observable<any> {
-    return this.http.get<any>(
+  ): Observable<{
+    members: [];
+    totalItems: number;
+    totalPages: number;
+    currentPage: number;
+    status: string;
+  }> {
+    return this.http.get<{
+      members: [];
+      totalItems: number;
+      totalPages: number;
+      currentPage: number;
+      status: string;
+    }>(
       `${this.baseUrl}/library/members/info?page=` +
         currentPage +
         `&size=50` +

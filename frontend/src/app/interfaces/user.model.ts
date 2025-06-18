@@ -7,6 +7,6 @@ export interface User {
   email: string | null;
   password: string | null;
   address: string | null;
-  phone_number: string | null;
+  phonenumber: string | null;
   role: string | null;
 }

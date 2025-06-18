@@ -35,27 +35,14 @@ export class RentalsHistoryComponent implements OnInit {
   // methods
 
   ngOnInit(): void {
-    // Books fetching
-    this.rental.books$.subscribe((b) => {
-      this.books = b;
-      this.bookMap.clear();
-      this.books.forEach((b) => this.bookMap.set(b.book_id, b.title));
-    });
-    // members fecthing
-    this.rental.members$.subscribe((m) => {
-      // console.log("members list ", m);
-
-      this.members = m;
-      this.userMap.clear();
-
-      this.members.forEach((m) => this.userMap.set(m.user_id, m.username));
-    });
     // error Handling
     this.rental.error$.subscribe((msg) => (this.errorMessage = msg));
     // fetching retals data
     this.rentalsService.fetchRentals().subscribe({
       next: (res) => {
-        this.rentals = res.rentals.filter((r) => r.actual_return_date !== null);
+        this.rentals = res.rentals.filter(
+          (r) => r.actual_return_date !== null && r.status_id === 2
+        );
         // console.log(res.rentals);
       },
       error: (err) => {
@@ -73,17 +60,5 @@ export class RentalsHistoryComponent implements OnInit {
         "Qaytarilish Sanasi",
       ],
     };
-  }
-
-  // getting user's username
-  userName(id: string): string | undefined {
-    return this.userMap.get(id) ?? "—";
-  }
-
-  // book's name
-  bookName(id: string) {
-    // console.log("book Id", id);
-
-    return this.bookMap.get(id) ?? "—";
   }
 }

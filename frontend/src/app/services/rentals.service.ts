@@ -32,8 +32,8 @@ export class RentalsService {
     });
   }
   // fetching rentals for the current library
-  fetchRentals(): Observable<{ rentals: RentalForm[] }> {
-    return this.http.get<{ rentals: RentalForm[] }>(`${this.baseUrl}/rentals`, {
+  fetchRentals(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/rentals`, {
       headers: this.headers,
     });
   }
@@ -41,7 +41,7 @@ export class RentalsService {
   // assigning the book returned and removing the rental from rentals list
   updateRental(retalId: string, bookId: string): Observable<any> {
     return this.http.put(
-      `${this.baseUrl}/rentals/return?rental_id=${retalId}&book_id=${bookId}`,
+      `${this.baseUrl}/rentals/delete?rental_id=${retalId}&book_id=${bookId}`,
       {},
       { headers: this.headers }
     );
@@ -73,6 +73,13 @@ export class RentalsService {
       { headers: this.headers }
     );
   }
+
+  fetchRentalById(rental_id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/rentals/${rental_id}`, {
+      headers: this.headers,
+    });
+  }
+
   // owner can approve the request, when request approved, it means the owner has decideded to give a book to the requester
   markAsRead(user_email: string): Observable<any> {
     return this.http.post<any>(

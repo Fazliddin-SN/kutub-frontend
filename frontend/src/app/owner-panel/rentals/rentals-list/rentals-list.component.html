@@ -26,8 +26,8 @@
                 <tbody>
                   <tr *ngFor="let row of rentals; let i = index">
                     <th class="text-center">{{ i + 1 }}</th>
-                    <td>{{ userName(row.user_id) }}</td>
-                    <td>{{ bookName(row.book_id) }}</td>
+                    <td>{{ row.member.username }}</td>
+                    <td>{{ row.book.title }}</td>
                     <td>{{ row.rental_date | date }}</td>
                     <td>{{ row.due_date | date }}</td>
                     <td>{{ row.return_date | date }}</td>
@@ -36,7 +36,7 @@
                         mat-raised-button
                         type="button"
                         class="btn btn-success"
-                        (click)="edit(row.rental_id)"
+                        (click)="edit(row.id)"
                       >
                         <i class="material-icons">edit</i>
                       </button>
@@ -44,7 +44,7 @@
                         mat-raised-button
                         type="button"
                         class="btn btn-danger"
-                        (click)="delete(row.rental_id, row.book_id)"
+                        (click)="delete(row.id, row.book_id)"
                       >
                         <i class="material-icons">assignment_returned</i>
                       </button>

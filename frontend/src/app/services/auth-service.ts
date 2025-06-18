@@ -47,7 +47,7 @@ export class AuthService {
   }
 
   // registering new users with roles 'admin', 'user', and 'owner'
-  registerUser(userData: Partial<User>): Observable<any> {
+  registerUser(userData: Partial<any>): Observable<any> {
     const { fullname, username, email, password, address, phone_number, role } =
       userData;
 

@@ -25,8 +25,8 @@
                 <tbody>
                   <tr *ngFor="let row of rentals; let i = index">
                     <th class="text-center">{{ i + 1 }}</th>
-                    <td>{{ userName(row.user_id) }}</td>
-                    <td>{{ bookName(row.book_id) }}</td>
+                    <td>{{ row.member.username }}</td>
+                    <td>{{ row.book.title }}</td>
                     <td>{{ row.rental_date | date }}</td>
                     <td>{{ row.due_date | date }}</td>
                     <td>{{ row.actual_return_date | date }}</td>

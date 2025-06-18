@@ -70,4 +70,16 @@ export class BookService {
       headers: this.headers,
     });
   }
+
+  // get available books
+  getAvailableBooks(currentPage: number, search: string): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/books?page=` +
+        currentPage +
+        "&size=50" +
+        "&search=" +
+        search,
+      { headers: this.headers }
+    );
+  }
 }
