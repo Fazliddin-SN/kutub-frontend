@@ -20,6 +20,10 @@ export class GlobalConfigService {
     return this.http.get(`${this.baseUrl}/categories`);
   }
 
+  loadUserRoles(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/auth/roles`);
+  }
+
   getBookStatuses(): Observable<any> {
     return this.http.get(`${this.baseUrl}/categories/b-status`, {});
   }

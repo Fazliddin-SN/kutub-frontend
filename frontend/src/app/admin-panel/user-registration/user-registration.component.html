@@ -165,7 +165,7 @@
                     <input
                       matInput
                       type="tel"
-                      formControlName="phone_number"
+                      formControlName="phonenumber"
                       required
                     />
                     <mat-hint>Format: +998955555555</mat-hint>
@@ -186,13 +186,13 @@
                 <div class="col-sm-10">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Role</mat-label>
-                    <mat-select formControlName="role" required>
-                      <mat-option *ngFor="let r of roles" [value]="r">
-                        {{ r }}
+                    <mat-select formControlName="role_id" required>
+                      <mat-option *ngFor="let r of roles" [value]="r.id">
+                        {{ r.name }}
                       </mat-option>
                     </mat-select>
                     <mat-error
-                      *ngIf="registerForm.get('role')?.hasError('required')"
+                      *ngIf="registerForm.get('role_id')?.hasError('required')"
                     >
                       Role kiritilishi shart.
                     </mat-error>

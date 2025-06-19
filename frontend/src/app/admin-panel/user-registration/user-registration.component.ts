@@ -2,6 +2,7 @@ import { Component, inject, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { debounceTime } from "rxjs";
+import { GlobalConfigService } from "src/app/global-config.service";
 import { Role } from "src/app/interfaces/user.model";
 import { AuthService } from "src/app/services/auth-service";
 import Swal from "sweetalert2";
@@ -26,9 +27,10 @@ if (savedRegisterForm) {
 export class UserRegistrationComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private config = inject(GlobalConfigService);
   hasLibrary = false;
 
-  roles: Role[] = ["admin", "owner", "user"];
+  roles: any[] = [];
   // to store and display error messages
   errorMessage: string = "";
 
@@ -48,7 +50,7 @@ export class UserRegistrationComponent {
     address: new FormControl(initialFormValue.address || "", {
       validators: [Validators.required],
     }),
-    phone_number: new FormControl(initialFormValue.phone_number || "", {
+    phonenumber: new FormControl(initialFormValue.phonenumber || "", {
       validators: [Validators.required],
     }),
     password: new FormControl("", [
@@ -57,7 +59,7 @@ export class UserRegistrationComponent {
     ]),
 
     // Role is managed with a select element. We can set a default, e.g., 'user'
-    role: new FormControl("user", [Validators.required]),
+    role_id: new FormControl(1, [Validators.required]),
   });
 
   // ngOninit () to save entered values within the form
@@ -73,52 +75,65 @@ export class UserRegistrationComponent {
               username: value.username,
               email: value.email,
               address: value.address,
-              phone_number: value.phone_number,
+              phonenumber: value.phonenumber,
             })
           );
         },
       });
+
+    this.loadRoles();
+  }
+
+  loadRoles() {
+    this.config.loadUserRoles().subscribe({
+      next: (res) => {
+        this.roles = res.roles;
+      },
+      error: (err) => (this.errorMessage = err.error.error),
+    });
   }
   // email is taken to pass to library-register component
   enteredEmail: string = "";
+
   // onSubmit method to send form data to backend via authService
   onSubmit(): void {
-    // console.log(this.registerForm.value);
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
       this.errorMessage = "Kerakli malumotlarni kiriting.";
       return;
     }
+
     // if user registered as owner, we should create a library
-    if (this.registerForm.value.role === "owner") {
+    if (this.registerForm.value.role_id === 2) {
       this.hasLibrary = true;
       this.enteredEmail = this.registerForm.value.email;
     }
 
-    const subscription = this.authService
-      .registerUser(this.registerForm.value)
-      .subscribe({
-        next: () => {
-          Swal.fire({
-            icon: "success",
-            text: "Yangi foydalanuvchi muvaffaqiyatli ro'yxatdan o'tkazildi.",
-            timer: 1000,
-          }).then(() => {
-            if (this.hasLibrary) {
-              this.router.navigate(["/admin-panel/add-lib"], {
-                queryParams: { email: this.enteredEmail },
-              });
-              localStorage.removeItem("saved-register-form");
-            } else {
-              this.router.navigate(["/dashboard"]);
-            }
-          });
-        },
-        error: (err) => {
-          // console.log('error ', err);
-          this.errorMessage = err.error?.error;
-        },
-      });
+    this.authService.registerUser(this.registerForm.value).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: "success",
+          text: "Yangi foydalanuvchi muvaffaqiyatli ro'yxatdan o'tkazildi.",
+          timer: 1000,
+        }).then(() => {
+          if (this.hasLibrary) {
+            this.router.navigate(["/admin-panel/add-lib"], {
+              queryParams: { email: this.enteredEmail },
+            });
+            this.registerForm.controls;
+            localStorage.removeItem("saved-register-form");
+          } else {
+            this.router.navigate(["/dashboard"]);
+            localStorage.removeItem("saved-register-form");
+            this.registerForm.controls;
+          }
+        });
+      },
+      error: (err) => {
+        // console.log('error ', err);
+        this.errorMessage = err.error?.error;
+      },
+    });
   }
 
   // close event emitter

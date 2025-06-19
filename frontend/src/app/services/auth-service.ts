@@ -47,9 +47,16 @@ export class AuthService {
   }
 
   // registering new users with roles 'admin', 'user', and 'owner'
-  registerUser(userData: Partial<any>): Observable<any> {
-    const { fullname, username, email, password, address, phone_number, role } =
-      userData;
+  registerUser(userData: any): Observable<any> {
+    const {
+      fullname,
+      username,
+      email,
+      password,
+      address,
+      phonenumber,
+      role_id,
+    } = userData;
 
     // Retrieve token from localStorage or another source
     const token = localStorage.getItem("token");
@@ -59,16 +66,15 @@ export class AuthService {
       Authorization: `Bearer ${token}`, // adjust if your API expects a different format
     });
     return this.http.post(
-      `${this.baseUrl}/auth/sign-up`,
+      `${this.baseUrl}/auth/register`,
       {
-        full_name: fullname,
-
+        fullname,
         username,
         email,
         password,
         address,
-        phone_number,
-        role,
+        phonenumber,
+        role_id,
       },
       { headers }
     );
@@ -85,7 +91,7 @@ export class AuthService {
 
     return this.http.post(
       `${this.baseUrl}/library`,
-      { library_name, user_email },
+      { library_name, email: user_email },
       {
         headers,
       }

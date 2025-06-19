@@ -236,7 +236,7 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   public menuItems: any[];
   authService = inject(AuthService);
-  userRole = localStorage.getItem("role");
+  userRole = localStorage.getItem("roleId");
   fullName: string = "";
   ps: any;
   userAvatar: string = "";
