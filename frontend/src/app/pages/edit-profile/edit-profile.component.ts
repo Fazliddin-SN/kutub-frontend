@@ -20,7 +20,7 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
     // build the form
     this.form = this.fb.group({
-      full_name: ["", [Validators.required, Validators.minLength(4)]],
+      fullname: ["", [Validators.required, Validators.minLength(4)]],
       phonenumber: ["", [Validators.required]],
       address: ["", [Validators.required, Validators.minLength(4)]],
       avatar: [null, [Validators.required]],
@@ -29,7 +29,7 @@ export class EditProfileComponent implements OnInit {
     this.authService.getUserDetails().subscribe({
       next: (res) => {
         this.form.patchValue({
-          full_name: res.user.full_name,
+          fullname: res.user.fullname,
           phonenumber: res.user.phonenumber,
           address: res.user.address,
         });
@@ -60,7 +60,7 @@ export class EditProfileComponent implements OnInit {
 
     // prepare FormData for multipart upload
     const data = new FormData();
-    data.append("full_name", this.form.value.full_name);
+    data.append("fullname", this.form.value.fullname);
     data.append("phonenumber", this.form.value.phonenumber);
     data.append("address", this.form.value.address);
 
