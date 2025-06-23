@@ -43,14 +43,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.errorMessage = "Kerakli malumotlarni kiriting.";
       return;
     }
-    console.log(this.loginForm.value);
 
     const { username, password } = this.loginForm.value;
 
     this.loginSub = this.authService.login(username, password).subscribe({
       next: (res) => {
         localStorage.setItem("token", res.token);
-        localStorage.setItem("avatar", res.user.avatar);
+        localStorage.setItem("avatar", res.user.imageData);
         this.authService.getDecodedToken();
         this.authService.setUserDetails();
         Swal.fire({

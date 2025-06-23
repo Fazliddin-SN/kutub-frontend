@@ -107,7 +107,7 @@ export class BooksListComponent implements OnInit, AfterViewInit {
     this.bookService.getBooks(this.currentPage).subscribe({
       next: (res) => {
         this.books = res.books;
-        console.log("books ", this.books);
+        // console.log("books ", this.books);
 
         this.currentPage = res.currentPage;
         this.totalPages = res.totalPages;

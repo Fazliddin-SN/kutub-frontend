@@ -25,15 +25,20 @@ export class EditProfileComponent implements OnInit {
       address: ["", [Validators.required, Validators.minLength(4)]],
       avatar: [null, [Validators.required]],
     });
+    this.getProfileData();
+  }
 
-    this.authService.getUserDetails().subscribe({
+  getProfileData() {
+    return this.authService.getUserDetails().subscribe({
       next: (res) => {
         this.form.patchValue({
           fullname: res.user.fullname,
           phonenumber: res.user.phonenumber,
           address: res.user.address,
         });
-        this.avatarPreview = res.user.avatarUrl;
+        this.avatarPreview = res.user.imageData;
+        localStorage.setItem("fullname", res.user.fullname);
+        localStorage.setItem("avatar", res.user.imageData);
       },
       error: (err) => {
         this.errorMessage = err.error.error;
@@ -41,14 +46,16 @@ export class EditProfileComponent implements OnInit {
     });
   }
   selectedFile: File | null = null;
+
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
-    if (!input.files.length) return;
-    this.selectedFile = input.files[0];
-    //preview
-    const reader = new FileReader();
-    reader.onload = () => (this.avatarPreview = reader.result);
-    reader.readAsDataURL(this.selectedFile);
+    if (input.files && input.files.length) {
+      this.selectedFile = input.files[0];
+      //preview
+      const reader = new FileReader();
+      reader.onload = () => (this.avatarPreview = reader.result);
+      reader.readAsDataURL(this.selectedFile);
+    }
   }
 
   onSubmit() {
@@ -60,6 +67,7 @@ export class EditProfileComponent implements OnInit {
 
     // prepare FormData for multipart upload
     const data = new FormData();
+
     data.append("fullname", this.form.value.fullname);
     data.append("phonenumber", this.form.value.phonenumber);
     data.append("address", this.form.value.address);
@@ -74,6 +82,7 @@ export class EditProfileComponent implements OnInit {
           text: "Malumotlar tahrirlandi",
           showConfirmButton: true,
         }).then(() => {
+          this.getProfileData();
           this.router.navigate(["/dashboard"]);
         });
       },

@@ -36,20 +36,20 @@
                   <div
                     class="error-msg"
                     *ngIf="
-                      form.get('full_name')?.touched &&
-                      form.get('full_name')?.invalid
+                      form.get('fullname')?.touched &&
+                      form.get('fullname')?.invalid
                     "
                   >
                     <small
                       *ngIf="
-                        form.get('full_name')?.errors?.['required']
+                        form.get('fullname')?.errors?.['required']
                       "
                     >
                       Ism Familiya bo'sh bo'lmasligi kerak.
                     </small>
                     <small
                       *ngIf="
-                        libUserForm.get('full_name')?.errors?.['minlength']
+                        libUserForm.get('fullname')?.errors?.['minlength']
                       "
                     >
                       Kamida 4 harfdan iborat bo'lishi kerak.
