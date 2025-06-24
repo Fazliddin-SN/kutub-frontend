@@ -43,6 +43,14 @@ export class OverdueRentalsComponent implements OnInit {
     };
     this.loadOverDueRentals();
   }
+  pagebyNum(ipage) {
+    console.log(ipage);
+    this.currentPage = ipage;
+    this.isPagesActive = true;
+    document.getElementById("listcard").scrollIntoView();
+
+    this.loadOverDueRentals();
+  }
 
   loadOverDueRentals() {
     return this.rentalsService.fetchOverDueRentals().subscribe({

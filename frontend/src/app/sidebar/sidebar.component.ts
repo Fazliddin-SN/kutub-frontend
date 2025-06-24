@@ -113,6 +113,12 @@ export const userROUTES: RouteInfo[] = [
     icontype: "dashboard",
   },
   {
+    path: "/user-panel/read-books",
+    title: "O'qigan Kitoblarim",
+    type: "link",
+    icontype: "book",
+  },
+  {
     path: "/user-panel",
     title: "Mening Amallarim",
     type: "sub",

@@ -25,21 +25,28 @@ export class SimpleUserService {
 
   // getting the library details for the user who is the member
   getMyLibraries(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/users/libraries`, {
+    return this.http.get<any>(`${this.baseUrl}/members/libraries`, {
       headers: this.headers,
     });
   }
 
   // getting avaiable books from libraries that the user is a member of
   getAvailabelBooks(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/users/available-books`, {
+    return this.http.get<any>(`${this.baseUrl}/members/available-books`, {
       headers: this.headers,
     });
   }
 
   // getting the books the user has borrowed and currently has
   getBorrowedBooks(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/users/borrowed-books`, {
+    return this.http.get<any>(`${this.baseUrl}/members/borrowed-books`, {
+      headers: this.headers,
+    });
+  }
+
+  // fetch books that user has read
+  getReadBooks(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/members/read-books`, {
       headers: this.headers,
     });
   }

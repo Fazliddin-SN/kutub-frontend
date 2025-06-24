@@ -26,9 +26,9 @@
                 <tbody>
                   <tr *ngFor="let row of borrowedBooks; let i = index">
                     <td class="text-center">{{ i + 1 }}</td>
-                    <td>{{ row.title }}</td>
-                    <td>{{ row.author }}</td>
-                    <td>{{ row.library_name }}</td>
+                    <td>{{ row.book.title }}</td>
+                    <td>{{ row.book.author }}</td>
+                    <td>{{ row.book.library.name }}</td>
                     <td>
                       {{ row.rental_date | date }}
                     </td>
@@ -83,11 +83,11 @@
                     <td>{{ row.title }}</td>
                     <td>{{ row.author }}</td>
                     <td>{{ row.publication_date | date }}</td>
-                    <td>{{ row.category_name }}</td>
-                    <td>{{ row.status }}</td>
-                    <td>{{ row.library_name }}</td>
-                    <td>{{ row.owner_name }}</td>
-                    <td>{{ row.owner_address }}</td>
+                    <td>{{ row.category.name }}</td>
+                    <td>{{ row.status.status_name }}</td>
+                    <td>{{ row.library.name }}</td>
+                    <td>{{ row.library.owner.fullname }}</td>
+                    <td>{{ row.library.owner.address }}</td>
                     <td>{{ row.read_count }}</td>
                     <td class="td-actions text-right">
                       <button

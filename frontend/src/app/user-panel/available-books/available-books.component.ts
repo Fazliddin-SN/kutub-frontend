@@ -95,7 +95,7 @@ export class AvailableBooksComponent implements OnInit {
         this.loading.borrowedBooks = false;
       },
       error: (err) => {
-        console.log("error ", err.error.error);
+        // console.log("error ", err.error.error);
 
         this.borrowedBooksError = err.error.error;
       },
