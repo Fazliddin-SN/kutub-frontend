@@ -1,0 +1,104 @@
+<div class="main-content book-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" id="listcard">
+          <div
+            class="card-header card-header-rose card-header-icon book-card-header"
+          >
+            <div class="card-icon">
+              <i class="material-icons">books</i>
+            </div>
+            <h4 class="card-title">Kechikkan Ijaralar Ro'yxati</h4>
+          </div>
+
+          <div class="card-body">
+            <div class="material-datatables">
+              <div class="table-responsive">
+                <ul class="pagination" *ngIf="needPagination">
+                  <!--  <li class="page-item">
+                              <a mat-button class="page-link" aria-label="Previous">
+                                <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
+                              </a>
+                            </li> -->
+                  <li
+                    class="page-item"
+                    [ngClass]="{ active: currentPage == i }"
+                    *ngFor="let page of mypages; index as i"
+                  >
+                    <a mat-button class="page-link" (click)="pagebyNum(i)">{{
+                      i + 1
+                    }}</a>
+                  </li>
+                  <!-- <li class="page-item">
+                              <a mat-button class="page-link" aria-label="Next">
+                                <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
+                              </a>
+                            </li> -->
+                </ul>
+                <table class="table book-table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">{{ tableData1.headerRow[0] }}</th>
+                      <th>{{ tableData1.headerRow[1] }}</th>
+                      <th>{{ tableData1.headerRow[2] }}</th>
+                      <th>{{ tableData1.headerRow[3] }}</th>
+                      <th>{{ tableData1.headerRow[4] }}</th>
+                      <th>{{ tableData1.headerRow[5] }}</th>
+                      <th>{{ tableData1.headerRow[6] }}</th>
+                      <th>{{ tableData1.headerRow[7] }}</th>
+                      <th>{{ tableData1.headerRow[8] }}</th>
+                      <th class="text-right">{{ tableData1.headerRow[8] }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let row of overdues; let i = index"
+                      class="book-row"
+                    >
+                      <td
+                        class="text-center index-cell"
+                        style="font-weight: bolder"
+                      >
+                        {{ i + 1 }}
+                      </td>
+                      <td class="title">{{ row.book.title }}</td>
+                      <td>{{ row.book.author }}</td>
+                      <td>{{ row.book.isbn }}</td>
+                      <td>{{ row.member.username }}</td>
+                      <td>{{ row.member.fullname }}</td>
+                      <td>{{ row.member.phonenumber }}</td>
+                      <td>{{ row.status.status_name }}</td>
+                      <td>{{ row.return_date | date }}</td>
+                      <td class="td-actions text-right">
+                        <!-- <button
+                          mat-raised-button
+                          type="button"
+                          class="btn btn-success"
+                          (click)="edit(row.id)"
+                        >
+                          <i class="material-icons">edit</i>
+                        </button> -->
+                        <button
+                          mat-raised-button
+                          type="button"
+                          class="btn btn-danger"
+                          (click)="markAsReturned(row.id, row.book.id)"
+                        >
+                          <i class="material-icons">assignment_returned</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="backend-error" *ngIf="errorMessage">
+                {{ errorMessage }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

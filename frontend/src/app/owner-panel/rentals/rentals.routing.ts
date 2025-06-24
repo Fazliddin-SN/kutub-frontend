@@ -7,6 +7,7 @@ import { UpdateRentalComponent } from "./update-rental/update-rental.component";
 import { RentalsHistoryComponent } from "./rentals-history/rentals-history.component";
 import { RentalRequestsComponent } from "./rental-requests/rental-requests.component";
 import { OwnerGuardService } from "src/app/services/role.guard.service";
+import { OverdueRentalsComponent } from "./overdue-rentals/overdue-rentals.component";
 
 export const rentalsRoute: Routes = [
   {
@@ -33,6 +34,10 @@ export const rentalsRoute: Routes = [
       {
         path: "requests",
         component: RentalRequestsComponent,
+      },
+      {
+        path: "overdues",
+        component: OverdueRentalsComponent,
       },
     ],
   },

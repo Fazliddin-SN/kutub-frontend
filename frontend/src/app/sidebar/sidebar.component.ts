@@ -62,6 +62,7 @@ export const ownerROUTES: RouteInfo[] = [
     children: [
       { path: "list", title: "Ijaralar Ro'yxati", ab: "IR" },
       { path: "add-rental", title: "Yangi Ijara", ab: "YI" },
+      { path: "overdues", title: "Kechikkan Ijaralar", ab: "KI" },
       { path: "history", title: "Ijaralar Tarixi", ab: "IT" },
       { path: "requests", title: "So'rovlar", ab: "IS" },
       // we don’t put edit/:bookId here—those links live in the list view

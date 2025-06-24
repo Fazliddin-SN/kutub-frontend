@@ -80,6 +80,13 @@ export class RentalsService {
     });
   }
 
+  // fetching overDue rentals
+  fetchOverDueRentals(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/rentals/overdue`, {
+      headers: this.headers,
+    });
+  }
+
   // owner can approve the request, when request approved, it means the owner has decideded to give a book to the requester
   markAsRead(user_email: string): Observable<any> {
     return this.http.post<any>(

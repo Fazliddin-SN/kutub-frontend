@@ -10,6 +10,7 @@ import { RouterModule } from "@angular/router";
 import { UpdateRentalComponent } from "./update-rental/update-rental.component";
 import { RentalsHistoryComponent } from "./rentals-history/rentals-history.component";
 import { RentalRequestsComponent } from "./rental-requests/rental-requests.component";
+import { OverdueRentalsComponent } from './overdue-rentals/overdue-rentals.component';
 @NgModule({
   declarations: [
     RentalsListComponent,
@@ -17,6 +18,7 @@ import { RentalRequestsComponent } from "./rental-requests/rental-requests.compo
     UpdateRentalComponent,
     RentalsHistoryComponent,
     RentalRequestsComponent,
+    OverdueRentalsComponent,
   ],
   imports: [
     CommonModule,

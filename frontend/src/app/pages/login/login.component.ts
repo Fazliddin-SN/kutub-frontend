@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginSub = this.authService.login(username, password).subscribe({
       next: (res) => {
         localStorage.setItem("token", res.token);
-        localStorage.setItem("avatar", res.user.imageData);
+        // localStorage.setItem("avatar", res.user.imageData);
         this.authService.getDecodedToken();
         this.authService.setUserDetails();
         Swal.fire({
